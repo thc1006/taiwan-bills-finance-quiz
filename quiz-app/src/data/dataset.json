@@ -1,7 +1,7 @@
 {
  "meta": {
   "title": "票券商業務人員專業科目測驗 題庫（整合版）",
-  "generated_at": "2026-07-25T15:49:12.197124+00:00",
+  "generated_at": "2026-07-25T16:59:24.346165+00:00",
   "schema_version": "1.0.0",
   "exam": {
    "name": "票券商業務人員專業科目測驗",
@@ -50,14 +50,16 @@
    "checked_at": "2026-07-25",
    "corpus": {
     "source": "全國法規資料庫（law.moj.gov.tw）",
-    "laws": 51,
-    "articles": 2655,
+    "laws": 55,
+    "articles": 2728,
     "retrieved_at": "2026-07-25"
    },
    "counts": {
-    "verified_article_exists": 457,
+    "verified_article_exists": 460,
     "no_citation": 795,
-    "cited_document_not_in_corpus": 8
+    "content_not_found": 1,
+    "cited_document_not_in_corpus": 2,
+    "verified_content_match": 2
    },
    "corpus_gap_warnings": {},
    "parser_coverage": {
@@ -2025,7 +2027,9 @@
    "law_citation": {
     "law": "票券商防制洗錢及打擊資恐注意事項範本",
     "article": "12",
-    "status": "cited_document_not_in_corpus"
+    "status": "verified_article_exists",
+    "current_text": "客戶為法人時，應以檢視公司章程或請客戶出具聲明書之方式，瞭解其是否可發\n行無記名股票，並對已發行無記名股票之客戶採取下列措施之一以確保其實質受\n益人之更新： \n 8 \n（一）請客戶要求具控制權之無記名股票股東，應通知客戶登記身分，並請客戶於具控\n制權股東身分發生變動時通知票券商。 \n （二）請客戶於每次股東會後，應向票券商更新其實質受益人資訊，並提供持有無記名\n股票達一定比率以上股東之資料。但客戶因其他原因獲悉具控制權股東身分發生\n變動時，應即通知票券商。",
+    "source_url": "https://www.mjib.gov.tw/userfiles/files/35-%E6%B4%97%E9%8C%A2%E9%98%B2%E5%88%B6%E8%99%95/files/%E8%87%AA%E5%BE%8B%E8%A6%8F%E7%AF%84/02-02-03.pdf"
    }
   },
   {
@@ -8280,9 +8284,10 @@
    },
    "tags": [],
    "law_citation": {
-    "law": "依中華民國票券金融商業同業公會會員徵信準則",
+    "law": "中華民國票券金融商業同業公會會員徵信準則",
     "article": "18",
-    "status": "cited_document_not_in_corpus"
+    "status": "content_not_found",
+    "note": "本文件現行版無條號編制，且解析引述的內容未能在現行文件中找到。"
    }
   },
   {
@@ -15067,7 +15072,10 @@
    "law_citation": {
     "law": "中華民國票券金融商業同業公會會員徵信準則",
     "article": "8",
-    "status": "cited_document_not_in_corpus"
+    "status": "verified_content_match",
+    "matched_text": "客戶申請保證背書或承銷時由營業單位索齊資料後移送",
+    "source_url": "https://www.tbfa.org.tw/law/files/%E7%A5%A8%E5%88%B8%E6%A5%AD%E5%BE%B5%E4%BF%A1%E6%BA%96%E5%89%87_112.4.doc",
+    "note": "本文件現行版無條號編制；已確認解析引述的內容仍在現行文件中。"
    }
   },
   {
@@ -20978,7 +20986,10 @@
    "law_citation": {
     "law": "中華民國票券金融商業同業公會會員徵信準則",
     "article": "12",
-    "status": "cited_document_not_in_corpus"
+    "status": "verified_content_match",
+    "matched_text": "徵信單位辦理徵信應以直接調查為主間接",
+    "source_url": "https://www.tbfa.org.tw/law/files/%E7%A5%A8%E5%88%B8%E6%A5%AD%E5%BE%B5%E4%BF%A1%E6%BA%96%E5%89%87_112.4.doc",
+    "note": "本文件現行版無條號編制；已確認解析引述的內容仍在現行文件中。"
    }
   },
   {
@@ -29621,9 +29632,11 @@
    },
    "tags": [],
    "law_citation": {
-    "law": "中央公債經售作業處理要點",
+    "law": "中央公債經售及買回作業處理要點",
     "article": "3",
-    "status": "cited_document_not_in_corpus"
+    "status": "verified_article_exists",
+    "current_text": "銀行、中華郵政股份有限公司、票券金融公司、證券商及保險業，符合下列條件者，得依本要點之規定，向本行國庫局（以下簡稱國庫局）申請受託為中央公債交易商（以下簡稱交易商），參與中央公債之標售、配售及買回：\n \n \n （一）除保險業外，經證券主管機關核准在其營業處所自行買賣政府債券。\n \n \n （二）最近一年度決算有稅後純益。\n \n \n （三）實收資本額在新臺幣十億元以上，且每股淨值高於每股金額。\n \n \n 本要點核定前，經本行委託辦理公債業務之金融機構，均得函請本行受託為交易商。",
+    "source_url": "https://www.law.cbc.gov.tw/Law/ShowAllPrint?LawID=LA06D001010"
    }
   },
   {
@@ -39885,9 +39898,11 @@
    },
    "tags": [],
    "law_citation": {
-    "law": "依國庫券經售及買回作業處理要點",
+    "law": "國庫券經售及買回作業處理要點",
     "article": "4",
-    "status": "cited_document_not_in_corpus"
+    "status": "verified_article_exists",
+    "current_text": "國庫券之標售採單一利率標，分為競標及非競標兩種，得同時或僅採競標一種方式辦理。\n \n \n （一）競標：投標利率以貼現率表示，並以低於底標利率，由低至高依次得標，得標利率相同而餘額不足分配時，按投標金額比例分配。得標者應繳價款依全部得標者所投最高利率換算之發行價格計算。\n \n \n （二）非競標：依前款發行價格計算。申購數額超過公告發行數額時，按申購數額比例分配。\n \n \n 前項分配金額以新臺幣一百萬元為累進單位。",
+    "source_url": "https://www.law.cbc.gov.tw/Law/ShowAllPrint?LawID=LA06D002001"
    }
   },
   {
@@ -40640,8 +40655,8 @@
     "law": "中央銀行公開市場操作作業要點",
     "article": "14",
     "status": "verified_article_exists",
-    "current_text": "投標單位應使用國庫局規定之賣回投標單（格式二）投標，並依第五點規定之方式投遞。\n \n \n \n \n \n \n \n &#x5341;&#x4E94;、",
-    "source_url": "https://www.law.cbc.gov.tw/Law/ShowAllPrint?LawID=LA06D002001"
+    "current_text": "債（票）券附買回交易之對象為銀行、票券金融公司、農業金庫、郵政公司、具本行公開市場操作指定交易商（以下簡稱指定交易商）身分之證券公司及其他經本行核可之金融機構。\n \n \n 前項金融機構非屬債券或票券自營商者，其承作附買回交易之成交單，應委託指定交易商開立。\n \n \n \n \n (合格之債（票）券及交易天期)",
+    "source_url": "https://www.law.cbc.gov.tw/Law/ShowAllPrint?LawID=LA03C009001"
    }
   },
   {

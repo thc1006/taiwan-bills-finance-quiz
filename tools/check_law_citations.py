@@ -56,6 +56,7 @@ ALIASES = {
     "票券業徵信準則": "中華民國票券金融商業同業公會會員徵信準則",
     "郵匯儲金投資債券票券管理辦法": "郵政儲金投資債券票券管理辦法",
     "銀行發行可轉讓定期存單應注意事項": "銀行業發行可轉讓定期存單應注意事項",
+    "中央公債經售作業處理要點": "中央公債經售及買回作業處理要點",
     "票券商以附買回或附賣回條件方式辦理之交易限額規定":
         "票券商主要負債總額及辦理附賣回條件交易限額規定",
     "票券商買賣短期票券預臨時放假補計利息辦法":
@@ -134,6 +135,13 @@ LAW_URLS: dict[str, str] = {}
 # 這些法規上的 article_not_found 不可信，一律降級為 indeterminate。
 SUSPECT_LAWS: dict[str, list[int]] = {}
 
+# 現行版沒有條號編制的文件 -> 全文。
+# 這類文件（例如票券公會會員徵信準則，現行版以壹貳參分章、條文不編號）
+# **不能用條號比對**：題目引用的「第N條」是舊版編號，而合成條號只會製造
+# 假的查證結果。改以「解析引述的內容是否出現在現行文件中」來查證 ——
+# 那其實是更強的證據：條號對得上不代表內容還在，內容對得上才是。
+UNNUMBERED: dict[str, str] = {}
+
 
 def load_corpus() -> dict[str, dict[str, str]]:
     """回傳 {法規名稱: {條號: 該條現行條文}}；條號含「之N」者記為 '21-1'。
@@ -177,10 +185,23 @@ def load_corpus() -> dict[str, dict[str, str]]:
             body = re.sub(r"\n{2,}", "\n", text[am.end():end]).strip()
             if len(body) > ART_MAX_CHARS:
                 body = body[:ART_MAX_CHARS].rstrip() + "…（節錄）"
-            arts.setdefault(key, body)
+            # 不能用 setdefault —— 央行的文件會出現重複的條號標題
+            # （一個空的、一個有內容），setdefault 會保留先出現的空白那個，
+            # 於是該條被視為「存在」但條文是空的，介面就顯示一個空的對照區塊。
+            # 改成：已有內容者不覆蓋，原本為空者以有內容的版本補上。
+            if body or key not in arts:
+                if not arts.get(key):
+                    arts[key] = body
         law_name = m.group(1).strip()
+        if re.search(r"^編號：無條號編制", text, re.M):
+            UNNUMBERED[law_name] = text
+            corpus[law_name] = {}
+            um0 = re.search(r"來源：\S+\s+(https?://\S+)", text)
+            if um0:
+                LAW_URLS[law_name] = um0.group(1)
+            continue
         corpus[law_name] = arts
-        um = re.search(r"來源：全國法規資料庫\s+(\S+)", text)
+        um = re.search(r"來源：\S+\s+(https?://\S+)", text)
         if um:
             LAW_URLS[law_name] = um.group(1)
 
@@ -231,6 +252,24 @@ class Resolver:
         if best:
             return "corpus", best[1], "suffix"
         return "unknown", raw, "none"
+
+
+def content_match(expl: str, doc: str) -> str | None:
+    """解析中若引述了文件內容，確認那段文字是否仍在現行文件中。
+
+    取解析裡最長的一段連續中文（去掉「依…第N條規定」這種引用套語），
+    只要有 12 字以上的片段能在文件中找到，就算內容確認。
+    12 字是刻意設的門檻：太短會被通用詞彙誤中，太長則抓不到改寫過的引述。
+    """
+    body = re.sub(r"依[^，。]{0,40}第\s*\S+\s*[條點][^，。]{0,20}規定[，。]?", "", expl)
+    body = re.sub(r"[^一-鿿0-9A-Za-z]", "", body)
+    doc_n = re.sub(r"[^一-鿿0-9A-Za-z]", "", doc)
+    for size in (24, 18, 12):
+        for i in range(0, max(0, len(body) - size) + 1):
+            frag = body[i:i + size]
+            if len(frag) == size and frag in doc_n:
+                return frag
+    return None
 
 
 ART_RE = re.compile(rf"第\s*({NUM})(?:\s*-\s*({NUM}))?\s*條(?:\s*之\s*({NUM}))?")
@@ -284,7 +323,21 @@ def main() -> int:
         if mode in ("fuzzy", "suffix"):
             rec["raw_law_name"] = raw
             rec["matched_via"] = mode
-        if kind == "corpus":
+        # 條文內容為空 = 抽取失敗，不能算「條號存在」
+        if kind == "corpus" and name not in UNNUMBERED and not corpus[name].get(art, "").strip():
+            corpus[name].pop(art, None)
+
+        if kind == "corpus" and name in UNNUMBERED:
+            frag = content_match(expl, UNNUMBERED[name])
+            if frag:
+                rec["status"] = "verified_content_match"
+                rec["matched_text"] = frag
+                rec["source_url"] = LAW_URLS.get(name)
+                rec["note"] = "本文件現行版無條號編制；已確認解析引述的內容仍在現行文件中。"
+            else:
+                rec["status"] = "content_not_found"
+                rec["note"] = "本文件現行版無條號編制，且解析引述的內容未能在現行文件中找到。"
+        elif kind == "corpus":
             if art in corpus[name]:
                 rec["status"] = "verified_article_exists"
                 # 嵌入現行條文原文，讓使用者作答後能直接對照現行法，
@@ -342,8 +395,9 @@ def main() -> int:
             print(f"    {k}: 缺 {v}")
 
     print("\n=== 引用法條稽核結果 ===")
-    for k in ["verified_article_exists", "article_not_found", "indeterminate",
-              "law_outside_corpus", "cited_document_not_in_corpus", "no_citation"]:
+    for k in ["verified_article_exists", "verified_content_match", "article_not_found",
+              "content_not_found", "indeterminate", "law_outside_corpus",
+              "cited_document_not_in_corpus", "no_citation"]:
         v = counts.get(k, 0)
         print(f"  {k:30s} {v:5d}  ({round(v / total * 100, 1)}%)")
     print(f"\nparser 覆蓋：解析含「第N條」的題 {has_article_ref} 題，成功解析 {parsed} 題"

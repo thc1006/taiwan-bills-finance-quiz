@@ -30,6 +30,16 @@ const CITATION_LABEL: Record<string, { text: string; cls: string; title: string 
     cls: 'badge-ok',
     title: '解析引用的條號在現行條文中仍然存在。注意：這不代表本題答案正確。',
   },
+  verified_content_match: {
+    text: '引述內容現行有效',
+    cls: 'badge-ok',
+    title: '該文件現行版無條號編制，已確認解析引述的內容仍在現行文件中。注意：這不代表本題答案正確。',
+  },
+  content_not_found: {
+    text: '⚠ 引述內容已不在現行文件',
+    cls: 'badge-warn',
+    title: '解析引述的規定在現行文件中找不到，可能已刪除或修正，本題有過時風險。',
+  },
   article_not_found: {
     text: '⚠ 引用條號已不存在',
     cls: 'badge-warn',

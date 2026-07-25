@@ -31,6 +31,10 @@ export type SourceType = 'official_association_bank' | 'community_compilation';
  */
 export type LawCitationStatus =
   | 'verified_article_exists'
+  /** 該文件現行版無條號編制，改以「解析引述的內容仍在現行文件中」查證 */
+  | 'verified_content_match'
+  /** 同上，但引述的內容在現行文件中找不到 —— 該規定可能已刪除 */
+  | 'content_not_found'
   | 'article_not_found'
   | 'indeterminate'
   | 'law_outside_corpus'
@@ -48,6 +52,9 @@ export interface LawCitation {
   raw_law_name?: string;
   matched_via?: 'fuzzy' | 'suffix';
   reason?: string;
+  /** verified_content_match 時，實際在現行文件中找到的片段 */
+  matched_text?: string;
+  note?: string;
 }
 
 /**

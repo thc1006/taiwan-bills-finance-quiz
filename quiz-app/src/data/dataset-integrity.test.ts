@@ -6,6 +6,8 @@ import { EXAM_SUBJECTS } from '../types/quiz';
 const VALID_KEYS = new Set(['A', 'B', 'C', 'D']);
 const VALID_CITATION_STATUS = new Set([
   'verified_article_exists',
+  'verified_content_match',
+  'content_not_found',
   'article_not_found',
   'indeterminate',
   'law_outside_corpus',
@@ -144,11 +146,31 @@ describe('provenance 與稽核欄位', () => {
     expect(bad.map((q) => q.id)).toEqual([]);
   });
 
-  it('verified_article_exists 的題必定帶有法規名稱、條號與條文原文', () => {
+  /**
+   * 條文原文不能是空字串。
+   *
+   * 實際踩過：央行的文件有重複的條號標題（一個空、一個有內容），
+   * 而語料庫用 setdefault 保留了先出現的空白那個 —— 於是該條被視為
+   * 「存在」但條文是空的，介面會顯示一個空的「現行條文對照」區塊，
+   * 比不顯示更糟。
+   */
+  it('verified_article_exists 的題必定帶有法規名稱、條號與非空的條文原文', () => {
     const bad = allQuestions.filter(
       (q) =>
         q.law_citation.status === 'verified_article_exists' &&
-        (!q.law_citation.law || !q.law_citation.article || !q.law_citation.current_text)
+        (!q.law_citation.law ||
+          !q.law_citation.article ||
+          !q.law_citation.current_text ||
+          q.law_citation.current_text.trim() === '')
+    );
+    expect(bad.map((q) => q.id)).toEqual([]);
+  });
+
+  it('內容比對通過的題必定記錄實際找到的片段', () => {
+    const bad = allQuestions.filter(
+      (q) =>
+        q.law_citation.status === 'verified_content_match' &&
+        (!q.law_citation.matched_text || q.law_citation.matched_text.length < 10)
     );
     expect(bad.map((q) => q.id)).toEqual([]);
   });

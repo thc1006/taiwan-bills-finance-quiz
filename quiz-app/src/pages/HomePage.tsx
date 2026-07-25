@@ -3,7 +3,6 @@ import type { ExamSubject, QuizConfig, QuizMode } from '../types/quiz';
 import { allTags, meta, sources, stats } from '../data/questions';
 import { MOCK_PER_SUBJECT, clearWrong, countWrong, poolSize } from '../hooks/useQuiz';
 import { PASS_PER_SUBJECT, PASS_TOTAL } from '../utils/scoring';
-import { AuditBar, type AuditSlice } from '../components/AuditBar';
 
 export interface HomePageProps {
   onStart: (config: QuizConfig) => void;
@@ -71,38 +70,6 @@ export function HomePage({ onStart }: HomePageProps) {
         : available > 0;
 
   const audit = meta.law_citation_audit;
-  const c = audit.counts;
-  const auditSlices: AuditSlice[] = [
-    {
-      key: 'verified',
-      label: '引用條文現行有效',
-      value: c['verified_article_exists'] ?? 0,
-      tone: 'v1',
-      hint: '解析引用的條號仍存在於現行條文，且條文原文已嵌入該題。不代表答案正確。',
-    },
-    {
-      key: 'notfound',
-      label: '⚠ 引用條號已不存在',
-      value: c['article_not_found'] ?? 0,
-      tone: 'critical',
-      hint: '引用的條號在現行條文中找不到，該題有過時風險。',
-    },
-    {
-      key: 'unchecked',
-      label: '引用他法／函令，未查證',
-      value: (c['law_outside_corpus'] ?? 0) + (c['cited_document_not_in_corpus'] ?? 0),
-      tone: 'v2',
-      hint: '引用銀行法、中央銀行法或各類函令、自律規範，不在本工具的法規語料庫內。',
-    },
-    {
-      key: 'none',
-      label: '解析未引用可辨識條號',
-      value: c['no_citation'] ?? 0,
-      tone: 'v3',
-      hint: '解析沒有寫出可解析的法規名稱與條號，無從比對。',
-    },
-  ];
-
   return (
     <div className="home">
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -319,12 +286,11 @@ export function HomePage({ onStart }: HomePageProps) {
       <section className="card">
         <h2>資料來源</h2>
 
-        <h3>引用法條稽核</h3>
         <p className="note">
-          以 {audit.corpus.laws} 部法規（{audit.corpus.articles} 條，擷取自
-          {audit.corpus.source}，{audit.corpus.retrieved_at}）比對每題解析引用的條號。
+          每題解析所引用的法條，均已與 {audit.corpus.laws} 部法規（
+          {audit.corpus.articles.toLocaleString()} 條，擷取自{audit.corpus.source}，
+          {audit.corpus.retrieved_at}）比對；確認條號現行有效者，該題直接附上條文原文。
         </p>
-        <AuditBar slices={auditSlices} total={stats.total} />
 
         <h3>題庫出處</h3>
         <ul className="source-list">

@@ -156,7 +156,9 @@
         "status": {
           "enum": [
             "verified_article_exists",
+            "verified_content_match",
             "article_not_found",
+            "content_not_found",
             "indeterminate",
             "law_outside_corpus",
             "cited_document_not_in_corpus",
@@ -189,6 +191,13 @@
           "description": "名稱非完全相符時的比對方式。fuzzy=近似字串；suffix=解析把法規名稱黏在其他詞後面（如「票券金融公司依據票券金融管理法」），取尾端相符者。"
         },
         "reason": {
+          "type": "string"
+        },
+        "matched_text": {
+          "type": "string",
+          "description": "內容比對時實際找到的片段"
+        },
+        "note": {
           "type": "string"
         }
       }
