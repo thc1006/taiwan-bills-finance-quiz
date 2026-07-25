@@ -1,7 +1,7 @@
 {
  "meta": {
   "title": "票券商業務人員專業科目測驗 題庫（整合版）",
-  "generated_at": "2026-07-25T14:38:29.639129+00:00",
+  "generated_at": "2026-07-25T15:16:47.292394+00:00",
   "schema_version": "1.0.0",
   "exam": {
    "name": "票券商業務人員專業科目測驗",
@@ -27,19 +27,19 @@
    "brochure_version": "115.05.01",
    "brochure_source_id": "sfi-brochure-115"
   },
-  "total_questions": 1237,
+  "total_questions": 1260,
   "by_subject": {
-   "票券金融法規": 574,
-   "票券金融實務": 663
+   "票券金融法規": 587,
+   "票券金融實務": 673
   },
   "by_source_type": {
    "official_association_bank": 480,
-   "community_compilation": 757
+   "community_compilation": 780
   },
-  "with_explanation": 1171,
-  "deduped_against_official": 198,
+  "with_explanation": 1193,
+  "deduped_against_official": 175,
   "answer_conflicts": {
-   "count": 7,
+   "count": 1,
    "note": "官方公會題庫與社群整理題庫對同一題給出不同答案的題數。本專案**不裁決誰對** —— 這些題在介面上會標示「答案有爭議」並同時顯示兩方答案，請自行查證現行法條。這是全題庫中最不該照單全收的一批題。"
   },
   "answer_verification": {
@@ -55,15 +55,15 @@
     "retrieved_at": "2026-07-25"
    },
    "counts": {
-    "verified_article_exists": 328,
-    "no_citation": 783,
-    "cited_document_not_in_corpus": 62,
+    "verified_article_exists": 338,
+    "no_citation": 795,
+    "cited_document_not_in_corpus": 63,
     "law_outside_corpus": 64
    },
    "corpus_gap_warnings": {},
    "parser_coverage": {
-    "explanations_containing_article_ref": 465,
-    "successfully_parsed": 454,
+    "explanations_containing_article_ref": 476,
+    "successfully_parsed": 465,
     "note": "兩者的差額是 parser 抓不出文件名稱的題（多為函令字號或無名稱引用），它們被歸入 no_citation —— 那代表『沒查到』，不代表『沒有引用』。"
    },
    "what_this_means": "verified_article_exists = 解析引用的法條在現行條文中仍然存在，**不代表該題答案正確**。article_not_found = 引用之條號已不存在於現行條文，該題解析（可能連同答案）有過時風險。law_outside_corpus / cited_document_not_in_corpus = 引用的法規或文件不在本語料庫內，**未進行檢查**。"
@@ -899,12 +899,9 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 21,
-    "also_in_community_compilation": true
+    "original_no": 21
    },
-   "tags": [
-    "易錯題"
-   ],
+   "tags": [],
    "law_citation": {
     "law": "票券金融公司從事衍生性金融商品交易管理辦法",
     "article": "6",
@@ -4855,8 +4852,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 127,
-    "also_in_community_compilation": true
+    "original_no": 127
    },
    "tags": [],
    "law_citation": {
@@ -4894,8 +4890,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 128,
-    "also_in_community_compilation": true
+    "original_no": 128
    },
    "tags": [],
    "law_citation": {
@@ -7851,8 +7846,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 209,
-    "also_in_community_compilation": true
+    "original_no": 209
    },
    "tags": [],
    "law_citation": {
@@ -10707,18 +10701,9 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 290,
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "A",
-     "kept_source": "official_association_bank",
-     "other": "B",
-     "other_source": "community_compilation"
-    }
+    "original_no": 290
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "status": "no_citation"
    }
@@ -11033,8 +11018,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 299,
-    "also_in_community_compilation": true
+    "original_no": 299
    },
    "tags": [],
    "law_citation": {
@@ -11631,8 +11615,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 316,
-    "also_in_community_compilation": true
+    "original_no": 316
    },
    "tags": [],
    "law_citation": {
@@ -12557,8 +12540,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 343,
-    "also_in_community_compilation": true
+    "original_no": 343
    },
    "tags": [],
    "law_citation": {
@@ -12865,18 +12847,9 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 352,
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "D",
-     "kept_source": "official_association_bank",
-     "other": "C",
-     "other_source": "community_compilation"
-    }
+    "original_no": 352
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "status": "no_citation"
    }
@@ -13981,8 +13954,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 384,
-    "also_in_community_compilation": true
+    "original_no": 384
    },
    "tags": [],
    "law_citation": {
@@ -14016,8 +13988,7 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 385,
-    "also_in_community_compilation": true
+    "original_no": 385
    },
    "tags": [],
    "law_citation": {
@@ -17023,18 +16994,9 @@
    "source_id": "tbfa-official-bank",
    "provenance": {
     "source_type": "official_association_bank",
-    "original_no": 472,
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "B",
-     "kept_source": "official_association_bank",
-     "other": "D",
-     "other_source": "community_compilation"
-    }
+    "original_no": 472
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "status": "no_citation"
    }
@@ -19101,6 +19063,41 @@
    }
   },
   {
+   "id": "comm-0065",
+   "stem": "票券金融公司之利害關係人於發行商業本票當日已提供足額擔保，屆本票到期日因擔保品價格下跌，致押值不足，下列何者敘述為正確？",
+   "options": [
+    {
+     "key": "A",
+     "text": "得以原金額續發"
+    },
+    {
+     "key": "B",
+     "text": "僅得就擔保品足額部分，續予發行"
+    },
+    {
+     "key": "C",
+     "text": "得以原金額續發同時限期補足擔保品"
+    },
+    {
+     "key": "D",
+     "text": "以上皆對"
+    }
+   ],
+   "answer": "B",
+   "explanation": "依「票券金融公司對利害關係人授信釋疑」，當擔保品不足時，不得續發，票券金融公司應與利害關係人協商合理清償方式。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 65,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0066",
    "stem": "以下何者非屬票券商之負責人？",
    "options": [
@@ -19128,8 +19125,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 66,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -19590,6 +19586,45 @@
     "status": "verified_article_exists",
     "current_text": "票券商辦理本票之承銷、保證或背書時，應對發行本票之公司詳實辦理徵信調查，查證其發行計畫及償還財源，並取得經會計師查核簽證之財務報表及查核報告書，以決定承銷、保證或背書金額。但承銷之本票經其他金融機構保證者，不在此限。",
     "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380146"
+   }
+  },
+  {
+   "id": "comm-0080",
+   "stem": "逾期授信之轉銷程序，下列何者正確？",
+   "options": [
+    {
+     "key": "A",
+     "text": "需經董事會之決議通過，並通知監察人"
+    },
+    {
+     "key": "B",
+     "text": "經董事長核准即可"
+    },
+    {
+     "key": "C",
+     "text": "若於董事會休會時，得由常務董事全權代理，無須再報董事會備查"
+    },
+    {
+     "key": "D",
+     "text": "以上皆對"
+    }
+   ],
+   "answer": "A",
+   "explanation": "依「票券金融公司資產評估損失準備提列及逾期授信催收款呆帳處理辦法」第12條規定，經需董事會決議通過，並通知監察人。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 80,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融公司資產評估損失準備提列及逾期授信催收款呆帳處理辦法",
+    "article": "12",
+    "status": "verified_article_exists",
+    "current_text": "逾期授信及催收款之轉銷，應經董事會之決議通過，並通知監察人。但經主管機關要求轉銷者，應即轉銷為呆帳，並提報最近一次董事會及通知監察人備查。董事會休會期間，得由常務董事會代為行使，並通知監察人，再報董事會備查。\n前項規定，如其於授信或轉銷呆帳時，屬於票券金融管理法第四十九條規定準用銀行法第三十三條規定金額以上之案件，應經三分之二以上董事之出席及出席董事四分之三以上之同意。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380161"
    }
   },
   {
@@ -21790,6 +21825,45 @@
    }
   },
   {
+   "id": "comm-0150",
+   "stem": "票券金融公司自有資本與風險性資產之比率，不得低於百分之多少？",
+   "options": [
+    {
+     "key": "A",
+     "text": "6"
+    },
+    {
+     "key": "B",
+     "text": "8"
+    },
+    {
+     "key": "C",
+     "text": "10"
+    },
+    {
+     "key": "D",
+     "text": "12"
+    }
+   ],
+   "answer": "B",
+   "explanation": "依「票券金融管理法」第41條第1項規定，票券金融公司自有資本與風險性資產之比率，不得低於百分之八；票券金融公司經主管機關規定應編製合併報表時，其合併後之自有資本與風險性資產之比率，亦同。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 150,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融管理法",
+    "article": "41",
+    "status": "verified_article_exists",
+    "current_text": "票券金融公司自有資本與風險性資產之比率，不得低於百分之八；票券金融公司經主管機關規定應編製合併報表時，其合併後之自有資本與風險性資產之比率，亦同。\n前項自有資本與風險性資產之範圍及計算方法，由主管機關以辦法定之。為健全票券金融公司之經營，主管機關於必要時，得對票券金融公司之風險性資產予以限制。\n票券金融公司自有資本與風險性資產之實際比率低於第一項規定者，主管機關得限制其盈餘分配，並為其他必要之處置或限制；其辦法，由主管機關定之。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380146"
+   }
+  },
+  {
    "id": "comm-0151",
    "stem": "下列何種短期票券屬附載利息之票券？",
    "options": [
@@ -21817,6 +21891,41 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 151,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
+   "id": "comm-0152",
+   "stem": "甲公司將所持有之短期票券售予票券商，並約定7天後甲公司支付2.5﹪之利息向票券商買回原票券，就票券商而言，此種交易方式為？",
+   "options": [
+    {
+     "key": "A",
+     "text": "附買回交易（RP）"
+    },
+    {
+     "key": "B",
+     "text": "附賣回交易（RS）"
+    },
+    {
+     "key": "C",
+     "text": "買斷交易（OP）"
+    },
+    {
+     "key": "D",
+     "text": "賣斷交易（OS）"
+    }
+   ],
+   "answer": "B",
+   "explanation": "所謂附賣回協議，係指「證券持有者出售證券予投資人，並與投資人約定於特定天期以確定之價格賣回該證券」，本題甲公司為證券持有者，票券商為投資人，屆期票券商將證券賣回予甲公司，故對票券商而言此筆交易為附買回",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 152,
     "sheet": "考題整理"
    },
    "tags": [],
@@ -22350,6 +22459,41 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 169,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
+   "id": "comm-0170",
+   "stem": "中央銀行衡酌國內外經濟情勢，調降重貼現率，及擔保放款融通利率各一碼，所稱之一碼係指利率：",
+   "options": [
+    {
+     "key": "A",
+     "text": "0.001"
+    },
+    {
+     "key": "B",
+     "text": "0.002"
+    },
+    {
+     "key": "C",
+     "text": "0.0025"
+    },
+    {
+     "key": "D",
+     "text": "0.001"
+    }
+   ],
+   "answer": "C",
+   "explanation": "一碼為0.25%",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 170,
     "sheet": "考題整理"
    },
    "tags": [],
@@ -23244,6 +23388,41 @@
    }
   },
   {
+   "id": "comm-0200",
+   "stem": "下列何種因子將對貨幣市場資金產生緊縮效果：",
+   "options": [
+    {
+     "key": "A",
+     "text": "央行透過公開市場操作買進票券"
+    },
+    {
+     "key": "B",
+     "text": "郵匯局轉存款質借"
+    },
+    {
+     "key": "C",
+     "text": "央行發行或標售NCD"
+    },
+    {
+     "key": "D",
+     "text": "銀行存放於央行準備金乙戶利息發放"
+    }
+   ],
+   "answer": "C",
+   "explanation": "央行實行附買回票券公開市場操作及郵匯局轉存款質借及銀行存放央行準備金乙戶利息等動作將有資金流入貨幣市場，央行發行NCD等同於央行收回資金將帶來緊縮效果。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 200,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0201",
    "stem": "某票券金融公司債券總部位為200億元，平均存續期間為5年，若殖利率上揚1個基本點，對該部位損益的影響為何？",
    "options": [
@@ -23984,8 +24163,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 227,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -24348,6 +24526,41 @@
    }
   },
   {
+   "id": "comm-0243",
+   "stem": "在利率期限結構中的市場區隔理論﹙the market segmentation theory﹚中，理論上如果長期利率上漲，則短期利率將",
+   "options": [
+    {
+     "key": "A",
+     "text": "下跌"
+    },
+    {
+     "key": "B",
+     "text": "上揚"
+    },
+    {
+     "key": "C",
+     "text": "不受影響"
+    },
+    {
+     "key": "D",
+     "text": "以上皆是"
+    }
+   ],
+   "answer": "C",
+   "explanation": "市場區隔理論指出，不同到期期間的債券難以互相取代，而且不同到期期間就會有不同資金供給者與需求者，形成彼此獨立的債券市場。所以，短期債券市場的利率，由短期市場供需決定，長期市場的利率，由長期市場決定，兩者不會相互影響。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 243,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0245",
    "stem": "下列何者不是金融機構可作為流動準備的項目？",
    "options": [
@@ -24410,8 +24623,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 246,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -24594,6 +24806,41 @@
    }
   },
   {
+   "id": "comm-0252",
+   "stem": "有關於「萬元成本」的敘述下列何者為非？",
+   "options": [
+    {
+     "key": "A",
+     "text": "此即代表該票券之承銷買入價格(成本)"
+    },
+    {
+     "key": "B",
+     "text": "主要目的係為便於次級市場的流通"
+    },
+    {
+     "key": "C",
+     "text": "主要目的係為便於計算交易面額及分離稅款"
+    },
+    {
+     "key": "D",
+     "text": "界定不附載利息票券是否正式成為貨幣市場流通工具的要項及特點"
+    }
+   ],
+   "answer": "C",
+   "explanation": "此即代表該票券之承銷買入價格(成本)，主要目的係為便於次級市場的流通，係為便於計算成交價格及分離稅款。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 252,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0256",
    "stem": "票券金融公司在信用風險管理組織架構上，通常以那一個單位為最高決策單位",
    "options": [
@@ -24657,8 +24904,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 257,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [
     "易錯題"
@@ -25694,6 +25940,41 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 291,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
+   "id": "comm-0292",
+   "stem": "若債券交易員看升殖利率，採用存續期間分析，則應作出何種操作模式",
+   "options": [
+    {
+     "key": "A",
+     "text": "買入債券"
+    },
+    {
+     "key": "B",
+     "text": "買短債替換長債"
+    },
+    {
+     "key": "C",
+     "text": "買長債替換短債"
+    },
+    {
+     "key": "D",
+     "text": "部位不須調整"
+    }
+   ],
+   "answer": "B",
+   "explanation": "短債的存續期間短，可降低整體部位的存續天期。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 292,
     "sheet": "考題整理"
    },
    "tags": [],
@@ -26778,18 +27059,9 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 323,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "C",
-     "kept_source": "community_compilation",
-     "other": "B",
-     "other_source": "community_compilation"
-    }
+    "sheet": "考題整理"
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "law": "金融機構兼營票券金融業務許可辦法",
     "article": "4",
@@ -27106,18 +27378,9 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 331,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "A",
-     "kept_source": "community_compilation",
-     "other": "D",
-     "other_source": "community_compilation"
-    }
+    "sheet": "考題整理"
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "law": "票券金融公司轉投資管理辦法",
     "article": "7",
@@ -27431,8 +27694,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 339,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -27562,6 +27824,45 @@
    }
   },
   {
+   "id": "comm-0343",
+   "stem": "以下何者非屬票券商之負責人？",
+   "options": [
+    {
+     "key": "A",
+     "text": "監察人"
+    },
+    {
+     "key": "B",
+     "text": "協理"
+    },
+    {
+     "key": "C",
+     "text": "襄理"
+    },
+    {
+     "key": "D",
+     "text": "副理"
+    }
+   ],
+   "answer": "C",
+   "explanation": "票券商負責人及業務人員管理規則第二條規定。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 343,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券商負責人及業務人員管理規則",
+    "article": "2",
+    "status": "verified_article_exists",
+    "current_text": "本規則所稱負責人，指董事、監察人、總經理、副總經理、協理、經理或與其職責相當之人。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380156"
+   }
+  },
+  {
    "id": "comm-0344",
    "stem": "以下何者為票券商業務人員？",
    "options": [
@@ -27630,8 +27931,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 345,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -28400,18 +28700,9 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 370,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true,
-    "answer_conflict": {
-     "kept": "A",
-     "kept_source": "community_compilation",
-     "other": "D",
-     "other_source": "community_compilation"
-    }
+    "sheet": "考題整理"
    },
-   "tags": [
-    "答案有爭議"
-   ],
+   "tags": [],
    "law_citation": {
     "law": "票券金融公司轉投資管理辦法",
     "article": "7",
@@ -30089,6 +30380,41 @@
    }
   },
   {
+   "id": "comm-0416",
+   "stem": "票券金融公司之自行查核，下列敘述何者正確?",
+   "options": [
+    {
+     "key": "A",
+     "text": "每半年至少辦理一次一般自行查核"
+    },
+    {
+     "key": "B",
+     "text": "每月至少辦理二次專案自行查核"
+    },
+    {
+     "key": "C",
+     "text": "自行查核應訂定營業、會計之自行查核計畫"
+    },
+    {
+     "key": "D",
+     "text": "自行查核人員應指派稽核單位人員查核"
+    }
+   ],
+   "answer": "A",
+   "explanation": "金融法規通函彙編第61輯34頁票券商內部控制及稽核制度實施辦法",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 425,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0417",
    "stem": "下列何者非票券商所稱之負責人?",
    "options": [
@@ -30868,8 +31194,7 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 451,
-    "sheet": "考題整理",
-    "also_in_community_compilation": true
+    "sheet": "考題整理"
    },
    "tags": [],
    "law_citation": {
@@ -32375,6 +32700,41 @@
    }
   },
   {
+   "id": "comm-0490",
+   "stem": "農曆年關將屆.通貨發行增加.市場週轉金不足.短期票券利率將:",
+   "options": [
+    {
+     "key": "A",
+     "text": "上揚"
+    },
+    {
+     "key": "B",
+     "text": "下跌"
+    },
+    {
+     "key": "C",
+     "text": "持平"
+    },
+    {
+     "key": "D",
+     "text": "大幅下跌"
+    }
+   ],
+   "answer": "A",
+   "explanation": "",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 504,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0491",
    "stem": "票券金融公司依「公開發行票券金融公司財務報告編製準則」編製之財務報告，下列何者有誤？",
    "options": [
@@ -32779,6 +33139,47 @@
     "status": "verified_article_exists",
     "current_text": "票券金融公司得經營之業務項目，由主管機關於下列範圍內就其本公司、分公司分別核定，並於營業執照載明之：\n一、短期票券之簽證、承銷業務。\n二、金融債券之簽證、承銷業務。\n三、短期票券之經紀、自營業務。\n四、金融債券之經紀、自營業務。\n五、政府債券之經紀、自營業務。\n六、短期票券之保證、背書業務。\n七、企業財務之諮詢服務業務。\n八、經主管機關核准辦理之其他有關業務。\n前項業務，涉及外匯業務之經營者，應經中央銀行許可；涉及政府債券或公司債者，應經證券主管機關許可。\n票券金融公司不得經營未經主管機關核定之業務。",
     "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380146"
+   }
+  },
+  {
+   "id": "comm-0517",
+   "stem": "票券金融公司從事衍生性金融商品交易，下列敘述何者正確？",
+   "options": [
+    {
+     "key": "A",
+     "text": "衍生性金融商品交易之風險管理人員應具有風險管理之專業能力，且得擔任衍生性金融商品交易部門之任何職務;確認及交割人員不得互相兼任\n答案錯誤"
+    },
+    {
+     "key": "B",
+     "text": "訂定風險管理限額時，應評估自有資本對風險之承擔能力"
+    },
+    {
+     "key": "C",
+     "text": "設計及測試風險計測方法，並以市價評估衍生性金融商品交易之價值及損益"
+    },
+    {
+     "key": "D",
+     "text": "以上皆是"
+    }
+   ],
+   "answer": "A",
+   "explanation": "依「票券金融公司從事衍生性金融商品交易管理辦法」第6條規定。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 22,
+    "sheet": "考題整理"
+   },
+   "tags": [
+    "易錯題"
+   ],
+   "law_citation": {
+    "law": "票券金融公司從事衍生性金融商品交易管理辦法",
+    "article": "6",
+    "status": "verified_article_exists",
+    "current_text": "票券金融公司從事衍生性金融商品交易，應依下列原則辦理：\n一、衍生性金融商品交易之風險管理人員應具有風險管理之專業能力，且不得擔任衍生性金融商品交易部門之任何職務。\n二、衍生性金融商品交易、確認及交割人員不得互相兼任。\n三、訂定風險管理限額時，應評估自有資本對風險之承擔能力。\n四、設計及測試風險計測方法，並以市價評估衍生性金融商品交易之價值及損益。除為規避已持有資產或負債風險之交易，得按月評估外，其他交易應即時或每日評估。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380162"
    }
   },
   {
@@ -34545,6 +34946,47 @@
    }
   },
   {
+   "id": "comm-0598",
+   "stem": "下列何者為非？",
+   "options": [
+    {
+     "key": "A",
+     "text": "短期票券得以債票或登記形式發行"
+    },
+    {
+     "key": "B",
+     "text": "票券商出售債票形式發行之短期票券，應於交易當日，將債票交付買受人，或將其交由買受人委託之其他銀行或集中保管機構保管，票券商不得代為保管"
+    },
+    {
+     "key": "C",
+     "text": "集中保管機構保管之短期票券，其買賣之交割，得以帳簿劃撥方式為之"
+    },
+    {
+     "key": "D",
+     "text": "以集中保管機構保管之短期票券為設質之標的者，其設質之交付，不得以帳簿劃撥方式為之"
+    }
+   ],
+   "answer": "D",
+   "explanation": "依票券金融管理法第26條規定辦理\n應",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 111,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融管理法",
+    "article": "26",
+    "raw_law_name": "依票券金融管理法",
+    "matched_via": "fuzzy",
+    "status": "verified_article_exists",
+    "current_text": "短期票券得以債票或登記形式發行；除國庫券外，以債票形式發行者，應送集中保管機構保管，以登記形式發行者，應由集中保管機構辦理發行登記。\n前項由集中保管機構保管或登記之短期票券，其買賣之交割，應以帳簿劃撥方式為之；其帳簿劃撥作業與以登記形式發行者之發行、登記及相關事項之辦法，由主管機關會商中央銀行定之。\n以集中保管機構保管或登記之短期票券為設質之標的者，其設質之交付，應以帳簿劃撥方式為之，不適用民法第九百零八條之規定。\n由集中保管機構辦理發行登記之短期票券，其轉讓、繼承或設定質權，非依主管機關依第二項所定辦法之規定辦理登記，不得對抗第三人。\n由集中保管機構辦理發行登記之短期票券，到期不獲付款時，集中保管機構應出具債權證明文件及不獲付款證明文件交予執票人或持有人。\n前項執票人經提示而取得之不獲付款證明文件，為票據法之拒絕證書。\n以登記形式發行之短期票券如為公司或公營事業機構之本票，執票人依第五項規定，於到期不獲付款，並取得債權證明文件…（節錄）",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380146"
+   }
+  },
+  {
    "id": "comm-0599",
    "stem": "票券金融公司對其持有實收資本總額百分之五以上之企業，或本公司負責人、主要股東，或對與本公司負責人或辦理授信之職員有利害關係者為擔保授信，其對同一授信客戶之擔保授信總餘額不得超過該票券金融公司淨值之百分比為多少？",
    "options": [
@@ -34851,6 +35293,84 @@
    }
   },
   {
+   "id": "comm-0608",
+   "stem": "金融機構於申請時最近幾年內無違反金融法規受處分者，得檢具相關書件，向主管機關申請許可兼營票券金融業務？",
+   "options": [
+    {
+     "key": "A",
+     "text": "半年"
+    },
+    {
+     "key": "B",
+     "text": "1年"
+    },
+    {
+     "key": "C",
+     "text": "2年"
+    },
+    {
+     "key": "D",
+     "text": "3年"
+    }
+   ],
+   "answer": "B",
+   "explanation": "依「金融機構兼營票券金融業務許可辦法」第4條規定，金融機構於申請時最近一年內無違反金融法規受處分者，得檢具相關書件，向主管機關申請許可兼營票券金融業務。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 122,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "金融機構兼營票券金融業務許可辦法",
+    "article": "4",
+    "status": "verified_article_exists",
+    "current_text": "金融機構於申請時最近一年內無違反票券金融管理法、銀行法受罰鍰處分或無受證券交易法第六十六條各款處分者，得檢具下列書件，向主管機關申請許可兼營票券金融業務：\n一、申請書（格式如附件）。\n二、董（理）事會會議紀錄。\n三、營業計畫書。\n四、其他經主管機關規定應提出之文件。\n外國金融機構分支機構得以總機構授權人員同意之證明文件，取代前項第二款之董（理）事會會議紀錄，並應檢具其兼營票券金融業務未違反母國法令及總機構章程之聲明書。\n第一項第三款營業計畫書應載明下列事項：\n一、辦理短期票券簽證、承銷、經紀或自營業務之部門或分支機構。\n二、市場環境評估。\n三、業務經營之原則及方針。\n四、未來三年營運量及損益預估，並敘明估計基礎。\n五、人員配置、管理及培訓（包括業務人員名冊及資格證明文件）。\n六、業務手冊（包括作業流程、會計處理程序與內部控制及內部稽核制度等）。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380154"
+   }
+  },
+  {
+   "id": "comm-0610",
+   "stem": "票券金融公司申請轉投資時，其減除轉投資金額（含本次）後之自有資本與風險性資產比率須達百分之幾以上？",
+   "options": [
+    {
+     "key": "A",
+     "text": "0.05"
+    },
+    {
+     "key": "B",
+     "text": "0.06"
+    },
+    {
+     "key": "C",
+     "text": "0.07"
+    },
+    {
+     "key": "D",
+     "text": "0.08"
+    }
+   ],
+   "answer": "D",
+   "explanation": "依「票券金融公司轉投資管理辦法」第7條第1項第1款規定，票券金融公司申請轉投資，應符合下列規定：減除轉投資金額 (含本次) 後之自有資本與風險性資產比率須達百分之八以上。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 125,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融公司轉投資管理辦法",
+    "article": "7",
+    "status": "verified_article_exists",
+    "current_text": "票券金融公司申請轉投資，應符合下列規定：\n一、減除轉投資金額（含本次）後之自有資本與風險性資產比率須達百分之八以上。\n二、實收資本額減除累積虧損及轉投資金額（含本次）後，須達新臺幣二十億元以上。\n三、最近一季保證墊款比率低於同業平均水準。\n四、保證責任準備及備抵呆帳無提列不足。\n五、上年度及截至申請時，無違反金融法規受處分。\n六、內部管理無重大缺失。\n七、最近三年平均稅後損益無虧損。\n八、無其他未符金融政策要求之重大情事者。\n票券金融公司申請轉投資時，如因最近一次金融檢查，或經主管機關審查，有新增之累積虧損或保證責任準備及備抵呆帳提列不足者，票券金融公司應重新核算前項第一款之比率。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380155"
+   }
+  },
+  {
    "id": "comm-0613",
    "stem": "票券金融公司經核發營業執照後，滿多久尚未開始營業者，主管機關應廢止其設立之許可，限期繳銷執照？",
    "options": [
@@ -34964,6 +35484,84 @@
    }
   },
   {
+   "id": "comm-0616",
+   "stem": "票券金融公司與其持有實收資本總額百分之三以上之企業，或與本公司負責人、職員或主要股東，或與本公司負責人之利害關係人為不動產交易時，應經董事會多少比重之董事出席及出席董事多少人數比重同意？",
+   "options": [
+    {
+     "key": "A",
+     "text": "四分之一、三分之一"
+    },
+    {
+     "key": "B",
+     "text": "三分之二、四分之三"
+    },
+    {
+     "key": "C",
+     "text": "三分之二、四分之一"
+    },
+    {
+     "key": "D",
+     "text": "四分之三、三分之二"
+    }
+   ],
+   "answer": "B",
+   "explanation": "依「票券金融管理法」第40條規定，票券金融公司與其持有實收資本總額百分之三以上之企業，或與本公司負責人、職員或主要股東，或與本公司負責人之利害關係人為不動產交易時，需合於營業常規，並應經董事會三分之二以",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 131,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融管理法",
+    "article": "40",
+    "status": "verified_article_exists",
+    "current_text": "票券金融公司不得投資於其他企業。但為配合政府經濟發展計畫或金融政策，經主管機關核准投資於金融相關事業、與其業務密切關聯之企業或於本法施行前經主管機關核准投資者，不在此限；其投資之對象、限額、管理及其他應遵行事項之辦法，由主管機關定之。\n票券金融公司投資債券及從事衍生性金融商品交易之種類、限額、管理及其他應遵行事項之辦法，由主管機關會商中央銀行定之。\n票券金融公司對自用不動產之投資，不得超過其於投資該項不動產時淨值之百分之三十。\n票券金融公司不得投資非自用不動產。但下列情形不在此限：\n一、營業所在地不動產主要部分為自用者。\n二、為短期內自用需要而預購者。\n三、原有不動產就地重建主要部分為自用者。\n票券金融公司依前項但書規定投資非自用不動產總金額，不得超過其淨值之百分之十，且與自用不動產投資合計之總金額，不得超過其於投資該項不動產時淨值之百分之三十。\n票券金融公司與其持有實收資本總額百分之三以上之企業，或與本公司負責人、職員或主要股…（節錄）",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380146"
+   }
+  },
+  {
+   "id": "comm-0618",
+   "stem": "有下列何種情事者，不得充任票券金融公司之負責人？",
+   "options": [
+    {
+     "key": "A",
+     "text": "無行為能力或限制行為能力者"
+    },
+    {
+     "key": "B",
+     "text": "受破產宣告，尚未復權者"
+    },
+    {
+     "key": "C",
+     "text": "曾犯組織犯罪防制條例規定之罪，經有罪判決確定者"
+    },
+    {
+     "key": "D",
+     "text": "以上皆是"
+    }
+   ],
+   "answer": "D",
+   "explanation": "依「票券商負責人及業務人員管理規則」第4條規定，有下列何種情事之一者，不得充任票券金融公司之負責人，於充任後始發生者，當然解任：1.無行為能力或限制行為能力者。2.曾犯組織犯罪防制條例規定之罪，經有罪判決",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 134,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券商負責人及業務人員管理規則",
+    "article": "4",
+    "status": "verified_article_exists",
+    "current_text": "有下列情事之一者，不得充任票券金融公司之負責人，於充任後始發生者，應予解任：\n一、無行為能力、限制行為能力或受輔助宣告尚未撤銷者。\n二、曾犯組織犯罪防制條例規定之罪，經有罪判決確定者。\n三、曾犯偽造貨幣、偽造有價證券、侵占、詐欺、背信罪，經宣告有期徒刑以上之刑確定，尚未執行完畢，或執行完畢、緩刑期滿或赦免後尚未逾十年者。\n四、曾犯偽造文書、妨害秘密、重利、損害債權罪或違反稅捐稽徵法、商標法、專利法或其他工商管理法規定，經宣告有期徒刑確定，尚未執行完畢，或執行完畢、緩刑期滿或赦免後尚未逾五年者。\n五、曾犯貪污罪，受刑之宣告確定，尚未執行完畢，或執行完畢、緩刑期，滿或赦免後尚未逾五年者。\n六、違反本法、銀行法、金融控股公司法、信託業法、金融資產證券化條例、不動產證券化條例、保險法、證券交易法、期貨交易法、證券投資信託及顧問法、管理外匯條例、信用合作社法、農業金融法、農會法、漁會法、洗錢防制法或其他金融管理法，受刑之宣告確定，尚未執行…（節錄）",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380156"
+   }
+  },
+  {
    "id": "comm-0620",
    "stem": "票券金融公司申請裁撤分公司，應檢具下列何種書件，向主管機關提出申請？",
    "options": [
@@ -35039,6 +35637,45 @@
     "status": "verified_article_exists",
     "current_text": "票券金融公司對資產之評估、損失準備之提列、逾期授信及催收款之清理及呆帳之轉銷，應建立內部處理制度及程序，報經董事會通過後，送主管機關備查，修正時亦同；其內容應至少包括下列事項：\n一、資產之評估及分類。\n二、備抵呆帳及損失準備提列政策。\n三、對逾期授信及催收款應採取之措施。\n四、催收程序有關之規定。\n五、逾期授信、催收款變更原授信還款約定及成立和解之程序、授權標準之規定。\n六、逾期授信、催收款及轉銷呆帳之會計處理。\n七、追索債權及其債權回收之會計處理。\n八、稽核單位列管考核重點。\n九、內部責任歸屬及獎懲方式。",
     "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380161"
+   }
+  },
+  {
+   "id": "comm-0622",
+   "stem": "票券金融公司申請轉投資，應符合下列何項規定？",
+   "options": [
+    {
+     "key": "A",
+     "text": "保證責任準備及備抵呆帳無提列不足"
+    },
+    {
+     "key": "B",
+     "text": "上年度及截至申請時，無違反金融法規受處分"
+    },
+    {
+     "key": "C",
+     "text": "內部管理無重大缺失"
+    },
+    {
+     "key": "D",
+     "text": "以上皆是"
+    }
+   ],
+   "answer": "D",
+   "explanation": "依「票券金融公司轉投資管理辦法」第7條規定，票券金融公司申請轉投資，應符合下列規定：4.保證責任準備及備抵呆帳無提列不足。5.上年度及截至申請時，無違反金融法規受處分。6.內部管理無重大缺失。",
+   "subject": "票券金融法規",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 139,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "票券金融公司轉投資管理辦法",
+    "article": "7",
+    "status": "verified_article_exists",
+    "current_text": "票券金融公司申請轉投資，應符合下列規定：\n一、減除轉投資金額（含本次）後之自有資本與風險性資產比率須達百分之八以上。\n二、實收資本額減除累積虧損及轉投資金額（含本次）後，須達新臺幣二十億元以上。\n三、最近一季保證墊款比率低於同業平均水準。\n四、保證責任準備及備抵呆帳無提列不足。\n五、上年度及截至申請時，無違反金融法規受處分。\n六、內部管理無重大缺失。\n七、最近三年平均稅後損益無虧損。\n八、無其他未符金融政策要求之重大情事者。\n票券金融公司申請轉投資時，如因最近一次金融檢查，或經主管機關審查，有新增之累積虧損或保證責任準備及備抵呆帳提列不足者，票券金融公司應重新核算前項第一款之比率。",
+    "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=G0380155"
    }
   },
   {
@@ -39016,6 +39653,43 @@
    }
   },
   {
+   "id": "comm-0750",
+   "stem": "有關國庫券之發行，下列敘述何者有誤？",
+   "options": [
+    {
+     "key": "A",
+     "text": "為貨幣市場之短期票券"
+    },
+    {
+     "key": "B",
+     "text": "按面額發行"
+    },
+    {
+     "key": "C",
+     "text": "中央銀行於經理國庫券時，得委託其他金融機構辦理"
+    },
+    {
+     "key": "D",
+     "text": "以上皆是"
+    }
+   ],
+   "answer": "B",
+   "explanation": "國庫券發行方式採貼現方式發行，公開標售，到期時照面額清償。\n依照國庫券經理辦法第三條:中央銀行於經理國庫券時，得委託其他金融機構辦理。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 279,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "law": "依照國庫券經理辦法",
+    "article": "3",
+    "status": "cited_document_not_in_corpus"
+   }
+  },
+  {
    "id": "comm-0751",
    "stem": "國庫券之發行數額、面額、期限及標售底價，由下列何者洽商中央銀行衡酌發行時之實際狀況訂定？",
    "options": [
@@ -39434,6 +40108,41 @@
    "provenance": {
     "source_type": "community_compilation",
     "original_no": 291,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
+   "id": "comm-0763",
+   "stem": "有關商業本票之敘述，下列何者錯誤？",
+   "options": [
+    {
+     "key": "A",
+     "text": "貨幣市場中最流通的工具"
+    },
+    {
+     "key": "B",
+     "text": "商業本票採面額發行"
+    },
+    {
+     "key": "C",
+     "text": "企業持有商業本票之利息所得應併入營利事業所得額合併課稅"
+    },
+    {
+     "key": "D",
+     "text": "附條件交易屬次級市場交易方式之一種"
+    }
+   ],
+   "answer": "B",
+   "explanation": "商業本票係採貼現方式發行、屆期還本。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 292,
     "sheet": "考題整理"
    },
    "tags": [],
@@ -41370,6 +42079,41 @@
    }
   },
   {
+   "id": "comm-0818",
+   "stem": "金融機構在中央銀行所開立的不計息、可隨時存取的準備金帳戶為？",
+   "options": [
+    {
+     "key": "A",
+     "text": "甲戶"
+    },
+    {
+     "key": "B",
+     "text": "乙戶"
+    },
+    {
+     "key": "C",
+     "text": "丙戶"
+    },
+    {
+     "key": "D",
+     "text": "支存帳戶"
+    }
+   ],
+   "answer": "A",
+   "explanation": "金融機構在央行開立的準備金甲戶，為憑開戶收取存款機構所簽發的支票，可隨時存取，不計利息。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 349,
+    "sheet": "考題整理"
+   },
+   "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
    "id": "comm-0819",
    "stem": "有關短期票券萬元成本的描述，下列何者為非？",
    "options": [
@@ -42027,6 +42771,43 @@
     "sheet": "考題整理"
    },
    "tags": [],
+   "law_citation": {
+    "status": "no_citation"
+   }
+  },
+  {
+   "id": "comm-0838",
+   "stem": "當景氣低迷，物價平穩，中央銀行採取寬鬆貨幣政策的空間增加，將可進一步預測長期利率可能進一步下跌，此時？",
+   "options": [
+    {
+     "key": "A",
+     "text": "買入短天期債券，當利率一旦如預期走低，獲利將比長期債券大"
+    },
+    {
+     "key": "B",
+     "text": "買入長天期債券，當利率一旦如預期走低，短期債券獲利大於長天期債券"
+    },
+    {
+     "key": "C",
+     "text": "買入長天期債券，當利率一旦如預期走低，獲利將比短期債券大"
+    },
+    {
+     "key": "D",
+     "text": "買入短天期債券，當利率一旦如預期走低，短期債券獲利大於長天期債券"
+    }
+   ],
+   "answer": "C",
+   "explanation": "買入長天期債券，當利率一旦如預期走低，獲利將比短期債券大。",
+   "subject": "票券金融實務",
+   "source_id": "community-compilation-940",
+   "provenance": {
+    "source_type": "community_compilation",
+    "original_no": 374,
+    "sheet": "考題整理"
+   },
+   "tags": [
+    "易錯題"
+   ],
    "law_citation": {
     "status": "no_citation"
    }

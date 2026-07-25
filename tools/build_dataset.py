@@ -46,11 +46,14 @@ SUBJ_PRACTICE = "票券金融實務"
 
 
 # ---------------------------------------------------------------- helpers
-def norm_text(s) -> str:
-    """題目指紋：NFKC 正規化後剝除空白與標點。
+CN_DIGITS = {"零": 0, "一": 1, "二": 2, "三": 3, "四": 4, "五": 5,
+             "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}
 
-    與 quiz-app/src/utils/question-identity.ts 的 fingerprint() 必須維持同一套定義。
-    兩邊定義若不一致，CI 擋得住的重複題，使用者的考卷上照樣會出現兩次。
+
+def norm_text(s) -> str:
+    """文字正規化：NFKC 後剝除空白與標點。
+
+    與 quiz-app/src/utils/question-identity.ts 的 normText() 必須維持同一套定義。
     """
     if s is None:
         return ""
@@ -58,10 +61,75 @@ def norm_text(s) -> str:
     s = re.sub(r"\s+", "", s)
     # ‐-― 一次涵蓋 ‐ ‑ ‒ – — ―。來源檔混用了其中多種，
     # 只列 - — – 會漏掉 U+2010/U+2011/U+2012/U+2015，導致同一題被當成兩題。
-    # 這個字元集必須與 TS 端 question-identity.ts 的 PUNCT_RE 完全相同。
-    s = re.sub(r"[，。？?、：:；;（）()「」『』【】\[\].,‐-―\-_/\\~｜|]", "", s)
+    # 注意這裡**不剝小數點**（'.' 不在集合內）—— 剝掉會讓 0.05 變成 005，
+    # 數值折疊就再也認不出它是 5%。
+    s = re.sub(r"[，。？?、：:；;（）()「」『』【】\[\]，、,‐-―\-_/\\~｜|]", "", s)
     s = s.replace("臺", "台")
     return s
+
+
+def _cn_num(w: str) -> float | None:
+    """中文數字轉阿拉伯（涵蓋 1~99，足夠選項中的用法）"""
+    if not w or any(c not in CN_DIGITS for c in w):
+        return None
+    if w.startswith("十"):
+        return 10 + (CN_DIGITS[w[1]] if len(w) > 1 else 0)
+    if "十" in w:
+        a, _, b = w.partition("十")
+        return CN_DIGITS[a] * 10 + (CN_DIGITS[b] if b else 0)
+    return float(sum(CN_DIGITS[c] for c in w)) if len(w) == 1 else None
+
+
+def _num(v: float) -> str:
+    """數值的正規表示。
+
+    不能用 f"{v:g}" —— Python 的 %g 對 4.99e7 這種量級會切換成科學記號
+    （`4.99014e+07`），而 JS 的等價寫法不會，兩端指紋就此分裂
+    （實測 1,260 題中有 7 題不一致，全是金額類的計算題）。
+    改用固定 6 位小數再去尾零：這個格式在 Python 與 JS 的定義完全一致。
+    """
+    return f"{v:.6f}".rstrip("0").rstrip(".")
+
+
+def norm_option(s) -> str:
+    """選項正規化，額外把數值記法折疊。
+
+    來源檔對同一個數值有三種寫法：`5%`、`0.05`、`百分之五`。
+    不折疊的話，同一題會因為選項寫法不同而被判為兩題不同的題目 ——
+    然後兩題都留在題庫裡，使用者連續看到兩次「一樣」的題。
+    折疊後它們指向同一個指紋，才會正確合併。
+    """
+    t = norm_text(s)
+    m = re.fullmatch(r"百分之([一二三四五六七八九十零]+)", t)
+    if m:
+        v = _cn_num(m.group(1))
+        if v is not None:
+            return f"#{_num(v / 100)}"
+    m = re.fullmatch(r"百分之([0-9.]+)", t)
+    if m:
+        return f"#{_num(float(m.group(1)) / 100)}"
+    m = re.fullmatch(r"([0-9.]+)%", t)
+    if m:
+        return f"#{_num(float(m.group(1)) / 100)}"
+    m = re.fullmatch(r"([0-9.]+)", t)
+    if m:
+        return f"#{_num(float(m.group(1)))}"
+    return t
+
+
+def fingerprint(stem, options: list[dict]) -> str:
+    """題目指紋 = 題幹 ＋ 選項集合（順序無關）。
+
+    **只用題幹是不夠的。** 本題庫裡「下列何者為非：」這種通用題幹是共用的，
+    不同的題目會用同一句開頭；只比題幹會把兩題完全不同的題判為重複，
+    然後靜默刪掉其中一題。實測有 6 題以上因此從題庫消失
+    （國庫券發行、短期票券設質、轉投資規定、商業本票…）。
+
+    選項用集合比對而非序列 —— 兩份來源可能以不同順序列出相同選項，
+    那仍是同一題。
+    """
+    opts = sorted(norm_option(o["text"]) for o in options)
+    return norm_text(stem) + "||" + "|".join(opts)
 
 
 def clean(v) -> str:
@@ -177,14 +245,14 @@ def merge(official: list[dict], community: list[dict]):
     by_fp: dict[str, dict] = {}
     ordered: list[dict] = []
     for q in official:
-        fp = norm_text(q["stem"])
+        fp = fingerprint(q["stem"], q["options"])
         by_fp[fp] = q
         ordered.append(q)
 
     dup = 0
     conflicts = 0
     for q in community:
-        fp = norm_text(q["stem"])
+        fp = fingerprint(q["stem"], q["options"])
         base = by_fp.get(fp)
         if base is not None:
             dup += 1
@@ -335,7 +403,27 @@ def main() -> int:
     for k, v in sorted(by_source.items()):
         print(f"  {k}: {v}")
     print(f"  含解析: {dataset['meta']['with_explanation']}")
+    # ── 指紋一致性 fixture ──────────────────────────────────
+    # Python 與 TypeScript 各有一份 fingerprint 實作，兩者必須逐字元同義。
+    # 光靠註解叮嚀是守不住的：實測它們已經分裂過兩次
+    # （連字號字元集少列 U+2010–U+2015；%g 對大數切換科學記號）。
+    # 這份 fixture 讓 TS 端的測試能逐題比對，把「兩份實作漂移」變成 CI 失敗。
+    fixture = os.path.join(REPO, "quiz-app", "src", "data", "__fixtures__",
+                           "fingerprints.json")
+    os.makedirs(os.path.dirname(fixture), exist_ok=True)
+    fh = open(fixture, "w", encoding="utf-8")
+    json.dump(
+        {
+            "_readme": "由 tools/build_dataset.py 產生。每個元素對應 dataset.json items 的同索引題目，"
+                       "值為 Python 端算出的指紋。TS 端若算出不同的值，代表兩份實作已經漂移。",
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "fingerprints": [fingerprint(q["stem"], q["options"]) for q in items],
+        },
+        fh, ensure_ascii=False,
+    )
+    fh.close()
     print(f"-> {OUT}  ({round(os.path.getsize(OUT)/1024,1)} KB)")
+    print(f"-> {fixture}  ({round(os.path.getsize(fixture)/1024,1)} KB)")
     return 0
 
 

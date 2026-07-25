@@ -73,12 +73,12 @@ export function buildPaper(config: QuizConfig): QuizQuestion[] {
       { subject: '票券金融法規', tags: config.tags, officialOnly: config.officialOnly },
       MOCK_PER_SUBJECT
     );
-    const used = new Set(first.map((q) => fingerprint(q.stem)));
+    const used = new Set(first.map((q) => fingerprint(q)));
     const second = getPool({
       subject: '票券金融實務',
       tags: config.tags,
       officialOnly: config.officialOnly,
-    }).filter((q) => !used.has(fingerprint(q.stem)));
+    }).filter((q) => !used.has(fingerprint(q)));
     return [...first, ...sample(second, MOCK_PER_SUBJECT)];
   }
 

@@ -102,22 +102,19 @@ def semantic_checks(ds: dict) -> list[str]:
         errs.append(f"meta.answer_conflicts.count={declared} 但實際 {n_conf}")
 
     # 8) 同科內不得有重複題（跨科重複是來源既有事實，由抽題層去重）
-    import re
-    import unicodedata
-
-    def fp(s: str) -> str:
-        s = unicodedata.normalize("NFKC", s)
-        s = re.sub(r"\s+", "", s)
-        # 與 build_dataset.py 的 norm_text、TS 端的 fingerprint 三方必須一致
-        s = re.sub(r"[，。？?、：:；;（）()「」『』【】\[\].,‐-―\-_/\\~｜|]", "", s)
-        return s.replace("臺", "台")
+    #
+    # 指紋定義**從 build_dataset 匯入**，不在這裡複製一份。
+    # 這裡曾經有自己的副本，於是 build_dataset 改用「題幹＋選項集合」之後，
+    # 副本還在只比題幹 —— 把 4 組其實是不同題的題目報成重複。
+    # 同一個概念有兩份實作，遲早會漂；能匯入就不要複製。
+    from build_dataset import fingerprint
 
     for subject in {q["subject"] for q in items}:
         seen: dict[str, str] = {}
         for q in items:
             if q["subject"] != subject:
                 continue
-            k = fp(q["stem"])
+            k = fingerprint(q["stem"], q["options"])
             if k in seen:
                 errs.append(f"同科重複題：[{subject}] {seen[k]} ↔ {q['id']}")
             seen[k] = q["id"]

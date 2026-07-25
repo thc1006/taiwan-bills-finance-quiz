@@ -76,7 +76,7 @@ describe('dataset 結構完整性', () => {
     for (const subject of EXAM_SUBJECTS) {
       const seen = new Map<string, string>();
       for (const q of allQuestions.filter((x) => x.subject === subject)) {
-        const fp = fingerprint(q.stem);
+        const fp = fingerprint(q);
         const prev = seen.get(fp);
         if (prev) dups.push(`[${subject}] ${prev} ↔ ${q.id}`);
         else seen.set(fp, q.id);
@@ -100,7 +100,7 @@ describe('dataset 結構完整性', () => {
       bySubject.set(
         subject,
         new Set(
-          allQuestions.filter((q) => q.subject === subject).map((q) => fingerprint(q.stem))
+          allQuestions.filter((q) => q.subject === subject).map((q) => fingerprint(q))
         )
       );
     }

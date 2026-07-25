@@ -82,7 +82,7 @@ describe('buildPaper', () => {
   it('同一份模擬考卷不出現內容重複題（跨科去重）', () => {
     for (let round = 0; round < 30; round++) {
       const paper = buildPaper(cfg({ mode: 'mock' }));
-      const fps = paper.map((q) => fingerprint(q.stem));
+      const fps = paper.map((q) => fingerprint(q));
       expect(new Set(fps).size).toBe(paper.length);
     }
   });
