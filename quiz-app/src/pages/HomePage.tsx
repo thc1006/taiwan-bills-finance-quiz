@@ -3,12 +3,24 @@ import type { ExamSubject, QuizConfig, QuizMode } from '../types/quiz';
 import { allTags, meta, sources, stats } from '../data/questions';
 import { MOCK_PER_SUBJECT, clearWrong, countWrong, poolSize } from '../hooks/useQuiz';
 import { PASS_PER_SUBJECT, PASS_TOTAL } from '../utils/scoring';
+import { Rich } from '../components/Rich';
+import { AuditBar, type AuditSlice } from '../components/AuditBar';
 
 export interface HomePageProps {
   onStart: (config: QuizConfig) => void;
 }
 
 const COUNT_OPTIONS = [10, 20, 30, 50, 100];
+
+const MODES: { id: QuizMode; label: string; hint: (n: number) => string }[] = [
+  { id: 'practice', label: '練習模式', hint: () => '自選範圍，作答後立即看答案與現行法條' },
+  {
+    id: 'mock',
+    label: '模擬考',
+    hint: () => `兩科各 ${MOCK_PER_SUBJECT} 題，分節計時，套用真實及格規則`,
+  },
+  { id: 'wrong', label: '錯題複習', hint: (n) => `只出做錯的題，目前有 ${n} 題` },
+];
 
 export function HomePage({ onStart }: HomePageProps) {
   const [mode, setMode] = useState<QuizMode>('practice');
@@ -24,6 +36,7 @@ export function HomePage({ onStart }: HomePageProps) {
     void wrongVersion;
     return countWrong(subject);
   }, [subject, wrongVersion]);
+
   const available = useMemo(
     () => poolSize({ subject, tags, officialOnly }),
     [subject, tags, officialOnly]
@@ -59,76 +72,121 @@ export function HomePage({ onStart }: HomePageProps) {
         : available > 0;
 
   const audit = meta.law_citation_audit;
+  const c = audit.counts;
+  const auditSlices: AuditSlice[] = [
+    {
+      key: 'verified',
+      label: '引用條文現行有效',
+      value: c['verified_article_exists'] ?? 0,
+      tone: 'v1',
+      hint: '解析引用的條號仍存在於現行條文，且條文原文已嵌入該題。不代表答案正確。',
+    },
+    {
+      key: 'notfound',
+      label: '⚠ 引用條號已不存在',
+      value: c['article_not_found'] ?? 0,
+      tone: 'critical',
+      hint: '引用的條號在現行條文中找不到，該題有過時風險。',
+    },
+    {
+      key: 'unchecked',
+      label: '引用他法／函令，未查證',
+      value: (c['law_outside_corpus'] ?? 0) + (c['cited_document_not_in_corpus'] ?? 0),
+      tone: 'v2',
+      hint: '引用銀行法、中央銀行法或各類函令、自律規範，不在本工具的法規語料庫內。',
+    },
+    {
+      key: 'none',
+      label: '解析未引用可辨識條號',
+      value: c['no_citation'] ?? 0,
+      tone: 'v3',
+      hint: '解析沒有寫出可解析的法規名稱與條號，無從比對。',
+    },
+  ];
 
   return (
     <div className="home">
+      {/* ── Hero ─────────────────────────────────────────── */}
       <section className="hero">
+        <p className="hero-eyebrow">{meta.exam.commissioner} 委託辦理</p>
         <h1>票券商業務人員 專業科目測驗</h1>
-        <p className="hero-sub">
-          {stats.total.toLocaleString()} 題練習題庫 · {stats.withLawText} 題附現行法條原文對照
-        </p>
+        <div className="hero-figures">
+          <span className="hero-fig">
+            <b>{stats.total.toLocaleString()}</b>
+            <small>練習題</small>
+          </span>
+          <span className="hero-fig">
+            <b>{stats.withLawText}</b>
+            <small>題附現行法條原文</small>
+          </span>
+        </div>
       </section>
 
-      {/* ── 考試規則（唯一權威來源：官方簡章） ── */}
-      <section className="card exam-spec">
+      {/* ── 考試規則 ──────────────────────────────────────── */}
+      <section className="card">
         <h2>考試規則</h2>
-        <table>
-          <tbody>
-            {meta.exam.subjects.map((s) => (
-              <tr key={s.name}>
-                <th>{s.name}</th>
-                <td>
-                  {s.questions} 題 · {s.minutes} 分鐘 · 滿分 {s.full_marks} 分
-                </td>
-              </tr>
-            ))}
-            <tr>
-              <th>合格標準</th>
-              <td className="pass-rule">
-                兩科總分合計達 <strong>{PASS_TOTAL}</strong> 分，
-                且<strong>任一科不得低於 {PASS_PER_SUBJECT} 分</strong>
-              </td>
-            </tr>
-            <tr>
-              <th>報名費</th>
-              <td>NT$ {meta.exam.fee_twd.toLocaleString()}</td>
-            </tr>
-            <tr>
-              <th>委託／執行</th>
-              <td>
-                {meta.exam.commissioner} 委託 {meta.exam.administrator} 辦理
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+        <div className="spec-grid">
+          {meta.exam.subjects.map((s, i) => (
+            <div className="spec" key={s.name}>
+              <span className="spec-node">第 {i + 1} 節</span>
+              <strong>{s.name}</strong>
+              <span className="spec-meta">
+                {s.questions} 題 · {s.minutes} 分鐘 · 滿分 {s.full_marks}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="rule-callout">
+          <span className="rule-icon" aria-hidden>
+            ✓
+          </span>
+          <div>
+            <strong>合格標準</strong>
+            <p>
+              兩科總分合計達 <b>{PASS_TOTAL}</b> 分，
+              <em>且任一科不得低於 {PASS_PER_SUBJECT} 分</em>
+            </p>
+            <small>
+              兩個條件都要滿足。法規 95 ＋ 實務 55 ＝ 150 分，總分雖過 140，
+              實務未達 60 仍不合格。
+            </small>
+          </div>
+        </div>
+
+        <dl className="kv">
+          <dt>報名費</dt>
+          <dd>NT$ {meta.exam.fee_twd.toLocaleString()}</dd>
+          <dt>執行單位</dt>
+          <dd>{meta.exam.administrator}</dd>
+          <dt>法源</dt>
+          <dd>{meta.exam.legal_basis}</dd>
+        </dl>
+
         <p className="note">
-          依官方簡章 {meta.exam.brochure_version} 版。網路上常見「實務 80 題 ／ 90 分鐘」「任一科低於
-          70 分不合格」的說法為過時或錯誤資訊。
+          依官方簡章 {meta.exam.brochure_version} 版。網路上常見「實務 80 題／90 分鐘」
+          「任一科低於 70 分不合格」的說法為過時或錯誤資訊。
         </p>
       </section>
 
-      {/* ── 出題設定 ── */}
+      {/* ── 開始練習 ──────────────────────────────────────── */}
       <section className="card">
         <h2>開始練習</h2>
 
         <fieldset className="field">
           <legend>模式</legend>
-          <div className="seg">
-            {(
-              [
-                ['practice', '練習模式', '自選範圍，作答後立即看答案與法條'],
-                ['mock', '模擬考', `兩科各 ${MOCK_PER_SUBJECT} 題，套用真實及格規則`],
-                ['wrong', '錯題複習', `目前有 ${wrongCount} 題`],
-              ] as const
-            ).map(([m, label, hint]) => (
+          <div className="mode-grid">
+            {MODES.map((m) => (
               <button
-                key={m}
+                key={m.id}
                 type="button"
-                className={`seg-btn ${mode === m ? 'on' : ''}`}
-                onClick={() => setMode(m)}
+                className={`mode-btn ${mode === m.id ? 'on' : ''}`}
+                aria-pressed={mode === m.id}
+                onClick={() => setMode(m.id)}
               >
-                <strong>{label}</strong>
-                <small>{hint}</small>
+                <strong>{m.label}</strong>
+                <small>{m.hint(wrongCount)}</small>
               </button>
             ))}
           </div>
@@ -144,14 +202,11 @@ export function HomePage({ onStart }: HomePageProps) {
                     key={s}
                     type="button"
                     className={`seg-btn ${subject === s ? 'on' : ''}`}
+                    aria-pressed={subject === s}
                     onClick={() => setSubject(s)}
                   >
-                    {s === 'all' ? '全部' : s}
-                    <small>
-                      {s === 'all'
-                        ? `${stats.total} 題`
-                        : `${stats.bySubject[s]} 題`}
-                    </small>
+                    {s === 'all' ? '兩科合併' : s}
+                    <small>{s === 'all' ? `${stats.total} 題` : `${stats.bySubject[s]} 題`}</small>
                   </button>
                 ))}
               </div>
@@ -159,15 +214,16 @@ export function HomePage({ onStart }: HomePageProps) {
 
             <fieldset className="field">
               <legend>題數</legend>
-              <div className="seg">
-                {COUNT_OPTIONS.map((c) => (
+              <div className="seg seg-tight">
+                {COUNT_OPTIONS.map((n) => (
                   <button
-                    key={c}
+                    key={n}
                     type="button"
-                    className={`seg-btn ${count === c ? 'on' : ''}`}
-                    onClick={() => setCount(c)}
+                    className={`seg-btn ${count === n ? 'on' : ''}`}
+                    aria-pressed={count === n}
+                    onClick={() => setCount(n)}
                   >
-                    {c}
+                    {n}
                   </button>
                 ))}
               </div>
@@ -185,6 +241,7 @@ export function HomePage({ onStart }: HomePageProps) {
                   key={t}
                   type="button"
                   className={`chip ${tags.includes(t) ? 'on' : ''}`}
+                  aria-pressed={tags.includes(t)}
                   onClick={() =>
                     setTags((prev) =>
                       prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]
@@ -197,6 +254,7 @@ export function HomePage({ onStart }: HomePageProps) {
             <button
               type="button"
               className={`chip ${officialOnly ? 'on' : ''}`}
+              aria-pressed={officialOnly}
               onClick={() => setOfficialOnly((v) => !v)}
               title="只出票券公會官方釋出的 480 題參考題庫"
             >
@@ -206,14 +264,13 @@ export function HomePage({ onStart }: HomePageProps) {
           {mode === 'mock' ? (
             <p className="note">
               模擬考不套用標籤篩選，以維持與正式測驗相同的出題結構
-              （兩科各 {MOCK_PER_SUBJECT} 題）。可用題數：法規／實務各{' '}
-              <strong>{mockAvailable}</strong> 題以上。
+              （兩科各 {MOCK_PER_SUBJECT} 題）。
             </p>
           ) : (
             <p className="note">
-              符合條件：<strong>{available}</strong> 題
+              符合條件 <strong>{available}</strong> 題
               {mode === 'practice' && available < count && available > 0 && (
-                <>（不足 {count} 題，將出 {available} 題）</>
+                <>，不足 {count} 題，將出 {available} 題</>
               )}
             </p>
           )}
@@ -222,7 +279,7 @@ export function HomePage({ onStart }: HomePageProps) {
         <div className="actions">
           <button
             type="button"
-            className="btn-primary"
+            className="btn-primary btn-lg"
             disabled={!startable}
             onClick={() => onStart(config)}
           >
@@ -250,70 +307,78 @@ export function HomePage({ onStart }: HomePageProps) {
         )}
       </section>
 
-      {/* ── 資料誠實揭露 ── */}
-      <section className="card provenance">
+      {/* ── 資料誠實揭露 ──────────────────────────────────── */}
+      <section className="card">
         <h2>這些題目從哪來、可信到什麼程度</h2>
-        <ul className="stat-grid">
-          <li>
+
+        <ul className="kpi-row">
+          <li className="kpi kpi-official">
             <b>{stats.official}</b>
             <span>官方公會題庫</span>
+            <small>測驗委託單位釋出</small>
           </li>
-          <li>
+          <li className="kpi kpi-community">
             <b>{stats.community}</b>
-            <span>社群考古題整理</span>
+            <span>社群考古題</span>
+            <small>不具名，含少數錯誤</small>
           </li>
-          <li>
+          <li className="kpi">
             <b>{stats.withExplanation}</b>
             <span>附解析</span>
+            <small>{Math.round((stats.withExplanation / stats.total) * 100)}% 的題目</small>
           </li>
-          <li>
+          <li className="kpi kpi-highlight">
             <b>{stats.withLawText}</b>
             <span>附現行法條原文</span>
+            <small>可直接對照現行法</small>
           </li>
         </ul>
 
-        <div className="warn-box">
-          <h3>⚠ 沒有任何一題的答案經過逐條核對</h3>
-          <p>{meta.answer_verification.note}</p>
+        <div className="alert alert-warn">
+          <h3>沒有任何一題的答案經過逐條核對</h3>
+          <p>
+            <Rich text={meta.answer_verification.note} />
+          </p>
         </div>
 
+        {meta.answer_conflicts.count > 0 && (
+          <div className="alert alert-bad">
+            <h3>{meta.answer_conflicts.count} 題兩份來源答案互相矛盾</h3>
+            <p>
+              <Rich text={meta.answer_conflicts.note} />
+            </p>
+          </div>
+        )}
+
         <h3>引用法條稽核</h3>
-        <p>
+        <p className="note">
           以 {audit.corpus.laws} 部票券法規（{audit.corpus.articles} 條，擷取自
-          {audit.corpus.source}，{audit.corpus.retrieved_at}）比對每題解析引用的條號：
+          {audit.corpus.source}，{audit.corpus.retrieved_at}）比對每題解析引用的條號。
         </p>
-        <ul className="audit-list">
-          <li>
-            引用條文現行仍存在：<b>{audit.counts['verified_article_exists'] ?? 0}</b> 題
-          </li>
-          <li>
-            引用條號已不存在（過時風險）：<b>{audit.counts['article_not_found'] ?? 0}</b> 題
-          </li>
-          <li>
-            引用他法／函令，未查證：
-            <b>
-              {(audit.counts['law_outside_corpus'] ?? 0) +
-                (audit.counts['cited_document_not_in_corpus'] ?? 0)}
-            </b>{' '}
-            題
-          </li>
-          <li>
-            解析未引用可辨識的條號：<b>{audit.counts['no_citation'] ?? 0}</b> 題
-          </li>
-        </ul>
-        <p className="note">{audit.what_this_means}</p>
+        <AuditBar slices={auditSlices} total={stats.total} />
+        <p className="note">
+          <Rich text={audit.what_this_means} />
+        </p>
 
         <h3>資料來源</h3>
         <ul className="source-list">
           {sources.map((s) => (
             <li key={s.source_id}>
-              <a href={s.url} target="_blank" rel="noreferrer noopener">
-                {s.title}
-              </a>
-              <span className={`badge ${s.authority === 'official' ? 'badge-ok' : 'badge-neutral'}`}>
-                {s.publisher}
-              </span>
-              <small>{s.note}</small>
+              <div className="source-head">
+                <a href={s.url} target="_blank" rel="noreferrer noopener">
+                  {s.title}
+                </a>
+                <span
+                  className={`badge ${
+                    s.authority === 'official' ? 'badge-official' : 'badge-community'
+                  }`}
+                >
+                  {s.authority === 'official' ? '官方' : '社群'}
+                </span>
+              </div>
+              <small>
+                {s.publisher} · {s.note}
+              </small>
             </li>
           ))}
         </ul>
@@ -321,8 +386,9 @@ export function HomePage({ onStart }: HomePageProps) {
 
       <footer className="site-foot">
         <p>
-          本工具為非官方備考練習資源，與中華民國票券金融商業同業公會、證券暨期貨市場發展基金會
-          均無隸屬關係。考試規則以官方簡章為準；法規以全國法規資料庫現行條文為準。
+          本工具為非官方備考練習資源，與中華民國票券金融商業同業公會、
+          證券暨期貨市場發展基金會均無隸屬關係。
+          考試規則以官方簡章為準；法規以全國法規資料庫現行條文為準。
         </p>
       </footer>
     </div>
