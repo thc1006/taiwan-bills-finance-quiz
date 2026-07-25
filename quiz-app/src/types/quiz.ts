@@ -50,12 +50,29 @@ export interface LawCitation {
   reason?: string;
 }
 
+/**
+ * 兩份來源對同一題給出不同答案。
+ *
+ * 這是「其中一方是錯的」的直接證據，也是全題庫中最不該照單全收的一批題。
+ * 本專案**不裁決誰對** —— 裁決需要查證，而我們沒有做查證。
+ * 介面上會同時顯示兩方答案，讓使用者自行查現行法條。
+ */
+export interface AnswerConflict {
+  /** 資料集實際採用的答案 */
+  kept: 'A' | 'B' | 'C' | 'D';
+  kept_source: SourceType;
+  /** 另一份來源給的答案 */
+  other: 'A' | 'B' | 'C' | 'D';
+  other_source: SourceType;
+}
+
 export interface Provenance {
   source_type: SourceType;
   original_no?: number | null;
   sheet?: string;
   explanation_from?: string;
   also_in_community_compilation?: boolean;
+  answer_conflict?: AnswerConflict;
 }
 
 /** 單一題目 */
@@ -109,6 +126,10 @@ export interface DatasetMeta {
   by_source_type: Record<string, number>;
   with_explanation: number;
   deduped_against_official: number;
+  answer_conflicts: {
+    count: number;
+    note: string;
+  };
   answer_verification: {
     verified_against_official_key: number;
     note: string;

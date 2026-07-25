@@ -82,7 +82,26 @@ def semantic_checks(ds: dict) -> list[str]:
         if actual != n:
             errs.append(f"law_citation_audit.counts[{status}]={n} 但實際 {actual}")
 
-    # 7) 同科內不得有重複題（跨科重複是來源既有事實，由抽題層去重）
+    # 7) 答案衝突必須誠實：kept 要等於實際採用的答案，kept_source 要等於該題來源
+    n_conf = 0
+    for q in items:
+        ac = q["provenance"].get("answer_conflict")
+        if not ac:
+            continue
+        n_conf += 1
+        if ac["kept"] != q["answer"]:
+            errs.append(f"{q['id']}: answer_conflict.kept={ac['kept']} 與實際答案 {q['answer']} 不符")
+        if ac["kept_source"] != q["provenance"]["source_type"]:
+            errs.append(f"{q['id']}: answer_conflict.kept_source 與該題來源類型不符")
+        if ac["kept"] == ac["other"]:
+            errs.append(f"{q['id']}: answer_conflict 兩邊答案相同，不構成衝突")
+        if "答案有爭議" not in q.get("tags", []):
+            errs.append(f"{q['id']}: 有 answer_conflict 卻沒有「答案有爭議」標籤，UI 篩不出來")
+    declared = meta.get("answer_conflicts", {}).get("count")
+    if declared != n_conf:
+        errs.append(f"meta.answer_conflicts.count={declared} 但實際 {n_conf}")
+
+    # 8) 同科內不得有重複題（跨科重複是來源既有事實，由抽題層去重）
     import re
     import unicodedata
 

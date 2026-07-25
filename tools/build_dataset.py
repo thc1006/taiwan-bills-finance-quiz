@@ -182,6 +182,7 @@ def merge(official: list[dict], community: list[dict]):
         ordered.append(q)
 
     dup = 0
+    conflicts = 0
     for q in community:
         fp = norm_text(q["stem"])
         base = by_fp.get(fp)
@@ -195,10 +196,30 @@ def merge(official: list[dict], community: list[dict]):
                 if t not in base["tags"]:
                     base["tags"].append(t)
             base["provenance"]["also_in_community_compilation"] = True
+
+            # 兩份來源對同一題給出不同答案 —— 這是「其中一方是錯的」的直接證據。
+            #
+            # 早期版本只保留官方版、把社群版默默丟掉。那等於銷毀了一條
+            # 「這題有爭議」的訊號 —— 而這幾題正好是全題庫中最不該被照單全收的。
+            # 現在把衝突記成一等欄位，並在介面上明確警示。
+            # 注意：**這裡不裁決誰對。** 裁決需要查證，而本專案沒有做查證。
+            if base["answer"] != q["answer"]:
+                conflicts += 1
+                # 用 kept/other 而非 official/community 命名：重複也可能發生在
+                # 社群檔內部（同一題在兩個工作表答案不同），那種情況下兩邊都是
+                # community，寫成 "official" 就是在說謊。
+                base["provenance"]["answer_conflict"] = {
+                    "kept": base["answer"],
+                    "kept_source": base["provenance"]["source_type"],
+                    "other": q["answer"],
+                    "other_source": q["provenance"]["source_type"],
+                }
+                if "答案有爭議" not in base["tags"]:
+                    base["tags"].append("答案有爭議")
             continue
         by_fp[fp] = q
         ordered.append(q)
-    return ordered, dup
+    return ordered, dup, conflicts
 
 
 SOURCES = [
@@ -244,7 +265,7 @@ SOURCES = [
 def main() -> int:
     official = load_official()
     community = load_community()
-    items, dup = merge(official, community)
+    items, dup, conflicts = merge(official, community)
 
     by_subject: dict[str, int] = {}
     by_source: dict[str, int] = {}
@@ -277,6 +298,14 @@ def main() -> int:
             "by_source_type": by_source,
             "with_explanation": sum(1 for q in items if q["explanation"]),
             "deduped_against_official": dup,
+            "answer_conflicts": {
+                "count": conflicts,
+                "note": (
+                    "官方公會題庫與社群整理題庫對同一題給出不同答案的題數。"
+                    "本專案**不裁決誰對** —— 這些題在介面上會標示「答案有爭議」並同時顯示兩方答案，"
+                    "請自行查證現行法條。這是全題庫中最不該照單全收的一批題。"
+                ),
+            },
             "answer_verification": {
                 "verified_against_official_key": 0,
                 "note": (
@@ -299,6 +328,7 @@ def main() -> int:
 
     print(f"官方公會題庫          : {len(official)} 題")
     print(f"社群考古題整理        : {len(community)} 題（與官方重複 {dup} 題已併入）")
+    print(f"  兩方答案衝突        : {conflicts} 題（已標記「答案有爭議」）")
     print(f"輸出總題數            : {len(items)} 題")
     for k, v in sorted(by_subject.items()):
         print(f"  {k}: {v}")

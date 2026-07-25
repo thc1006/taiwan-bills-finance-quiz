@@ -2,6 +2,11 @@ import type { QuizQuestion } from '../types/quiz';
 import { CitationBadge, SourceBadge } from './SourceBadge';
 import { LawArticle } from './LawArticle';
 
+const SOURCE_NAME: Record<string, string> = {
+  official_association_bank: '官方公會題庫',
+  community_compilation: '社群考古題',
+};
+
 export interface QuestionCardProps {
   question: QuizQuestion;
   index: number;
@@ -89,6 +94,20 @@ export function QuestionCard({
             <p className="q-explanation q-muted">此題來源檔未附解析。</p>
           )}
           <LawArticle citation={question.law_citation} />
+          {/*
+            兩份來源答案不一致 —— 這比「來源是社群」嚴重得多，因為它是
+            「其中一方確定是錯的」的直接證據。必須排在其他警語之前。
+          */}
+          {question.provenance.answer_conflict && (
+            <p className="q-conflict">
+              ⚠ <strong>本題答案有爭議。</strong>
+              {SOURCE_NAME[question.provenance.answer_conflict.kept_source]}標為{' '}
+              <strong>{question.provenance.answer_conflict.kept}</strong>，
+              {SOURCE_NAME[question.provenance.answer_conflict.other_source]}標為{' '}
+              <strong>{question.provenance.answer_conflict.other}</strong>。
+              本工具採用前者，但<strong>未裁決誰對</strong> —— 請自行查證現行法條後再決定。
+            </p>
+          )}
           {question.provenance.source_type === 'community_compilation' && (
             <p className="q-caveat">
               本題來自社群整理的考古題彙編，答案未經官方認可；若與現行法條牴觸，請以法條為準。

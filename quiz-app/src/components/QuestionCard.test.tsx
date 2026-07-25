@@ -36,6 +36,23 @@ const community: QuizQuestion = {
   explanation: '',
 };
 
+const conflicted: QuizQuestion = {
+  ...base,
+  id: 'tbfa-290',
+  tags: ['答案有爭議'],
+  provenance: {
+    source_type: 'official_association_bank',
+    original_no: 290,
+    also_in_community_compilation: true,
+    answer_conflict: {
+      kept: 'C',
+      kept_source: 'official_association_bank',
+      other: 'A',
+      other_source: 'community_compilation',
+    },
+  },
+};
+
 function setup(q: QuizQuestion, revealed: boolean, selected: 'A' | 'B' | 'C' | 'D' | null | undefined) {
   const onSelect = vi.fn();
   render(
@@ -131,5 +148,28 @@ describe('來源揭露', () => {
   it('無法條引用時不渲染條文區塊', () => {
     setup(community, true, 'A');
     expect(screen.queryByText(/現行條文對照/)).not.toBeInTheDocument();
+  });
+});
+
+describe('答案衝突警示', () => {
+  /** 這是全題庫中最不該照單全收的一批題，警示不能只藏在 tag 裡。 */
+  it('揭曉後明確顯示兩方答案並聲明未裁決', () => {
+    setup(conflicted, true, 'A');
+    const box = document.querySelector('.q-conflict');
+    expect(box).not.toBeNull();
+    expect(box?.textContent).toContain('答案有爭議');
+    expect(box?.textContent).toContain('官方公會題庫');
+    expect(box?.textContent).toContain('社群考古題');
+    expect(box?.textContent).toContain('未裁決誰對');
+  });
+
+  it('作答中（未揭曉）不顯示衝突警示 —— 那會洩漏答案範圍', () => {
+    setup(conflicted, false, undefined);
+    expect(document.querySelector('.q-conflict')).toBeNull();
+  });
+
+  it('無衝突的題不渲染警示區塊', () => {
+    setup(base, true, 'A');
+    expect(document.querySelector('.q-conflict')).toBeNull();
   });
 });

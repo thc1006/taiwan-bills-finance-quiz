@@ -3,7 +3,11 @@
   "$id": "dataset.schema.json",
   "title": "票券商業務人員題庫資料集",
   "type": "object",
-  "required": ["meta", "sources", "items"],
+  "required": [
+    "meta",
+    "sources",
+    "items"
+  ],
   "properties": {
     "meta": {
       "type": "object",
@@ -15,55 +19,133 @@
         "answer_verification"
       ],
       "properties": {
-        "title": { "type": "string" },
-        "generated_at": { "type": "string" },
-        "schema_version": { "type": "string" },
+        "title": {
+          "type": "string"
+        },
+        "generated_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string"
+        },
         "exam": {
           "type": "object",
-          "required": ["name", "subjects", "passing_rule"],
+          "required": [
+            "name",
+            "subjects",
+            "passing_rule"
+          ],
           "properties": {
-            "name": { "type": "string" },
-            "commissioner": { "type": "string" },
-            "administrator": { "type": "string" },
-            "legal_basis": { "type": "string" },
+            "name": {
+              "type": "string"
+            },
+            "commissioner": {
+              "type": "string"
+            },
+            "administrator": {
+              "type": "string"
+            },
+            "legal_basis": {
+              "type": "string"
+            },
             "subjects": {
               "type": "array",
               "minItems": 2,
               "maxItems": 2,
               "items": {
                 "type": "object",
-                "required": ["name", "questions", "minutes", "full_marks"],
+                "required": [
+                  "name",
+                  "questions",
+                  "minutes",
+                  "full_marks"
+                ],
                 "properties": {
-                  "name": { "enum": ["票券金融法規", "票券金融實務"] },
-                  "questions": { "const": 50 },
-                  "minutes": { "const": 60 },
-                  "full_marks": { "const": 100 }
+                  "name": {
+                    "enum": [
+                      "票券金融法規",
+                      "票券金融實務"
+                    ]
+                  },
+                  "questions": {
+                    "const": 50
+                  },
+                  "minutes": {
+                    "const": 60
+                  },
+                  "full_marks": {
+                    "const": 100
+                  }
                 }
               }
             },
-            "passing_rule": { "type": "string" },
-            "fee_twd": { "type": "integer" },
-            "brochure_version": { "type": "string" },
-            "brochure_source_id": { "type": "string" }
+            "passing_rule": {
+              "type": "string"
+            },
+            "fee_twd": {
+              "type": "integer"
+            },
+            "brochure_version": {
+              "type": "string"
+            },
+            "brochure_source_id": {
+              "type": "string"
+            }
           }
         },
-        "total_questions": { "type": "integer", "minimum": 1 },
-        "by_subject": { "type": "object" },
-        "by_source_type": { "type": "object" },
-        "with_explanation": { "type": "integer" },
-        "deduped_against_official": { "type": "integer" },
+        "total_questions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_subject": {
+          "type": "object"
+        },
+        "by_source_type": {
+          "type": "object"
+        },
+        "with_explanation": {
+          "type": "integer"
+        },
+        "deduped_against_official": {
+          "type": "integer"
+        },
         "answer_verification": {
           "type": "object",
-          "required": ["verified_against_official_key", "note"],
+          "required": [
+            "verified_against_official_key",
+            "note"
+          ],
           "properties": {
             "verified_against_official_key": {
               "type": "integer",
               "description": "與官方答案逐條核對過的題數。目前為 0，不得在未實際查證時調高。"
             },
-            "note": { "type": "string", "minLength": 20 }
+            "note": {
+              "type": "string",
+              "minLength": 20
+            }
           }
         },
-        "law_citation_audit": { "type": "object" }
+        "law_citation_audit": {
+          "type": "object"
+        },
+        "answer_conflicts": {
+          "type": "object",
+          "required": [
+            "count",
+            "note"
+          ],
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "note": {
+              "type": "string",
+              "minLength": 20
+            }
+          }
+        }
       }
     },
     "sources": {
@@ -71,22 +153,51 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["source_id", "title", "url", "publisher", "authority", "note"],
+        "required": [
+          "source_id",
+          "title",
+          "url",
+          "publisher",
+          "authority",
+          "note"
+        ],
         "properties": {
-          "source_id": { "type": "string" },
-          "title": { "type": "string" },
-          "url": { "type": "string", "format": "uri" },
-          "publisher": { "type": "string", "minLength": 1 },
-          "authority": { "enum": ["official", "community"] },
-          "accessed_at": { "type": "string" },
-          "note": { "type": "string", "minLength": 10 }
+          "source_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publisher": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authority": {
+            "enum": [
+              "official",
+              "community"
+            ]
+          },
+          "accessed_at": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 10
+          }
         }
       }
     },
     "items": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "item.schema.json" }
+      "items": {
+        "$ref": "item.schema.json"
+      }
     }
   }
 }

@@ -56,7 +56,7 @@
 
 /* 高對比：加深邊框與文字，提高焦點可見度 */
 :root[data-high-contrast] {
-  --line: currentColor;
+  --line: var(--ink);
   --dim: var(--ink);
 }
 
@@ -208,6 +208,12 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 .q-skipped { color: var(--dim); font-size: .85em; margin-left: 8px; }
 .q-explanation { margin: 0 0 10px; font-size: .9em; color: var(--dim); white-space: pre-wrap; }
 .q-muted { font-style: italic; }
+.q-conflict {
+  font-size: .85em; color: var(--bad); background: var(--bad-bg);
+  border-left: 4px solid var(--bad); padding: 10px 14px;
+  border-radius: 0 6px 6px 0; margin: 10px 0 0;
+}
+
 .q-caveat {
   font-size: .82em; color: var(--warn); background: var(--warn-bg);
   padding: 8px 12px; border-radius: 6px; margin: 10px 0 0;

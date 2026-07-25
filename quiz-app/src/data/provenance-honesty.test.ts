@@ -75,6 +75,58 @@ describe('法條稽核的語意不得被誇大', () => {
   });
 });
 
+/**
+ * 兩份來源對同一題給出不同答案時，早期版本只保留其中一份、把另一份默默丟掉。
+ *
+ * 那等於銷毀證據：答案不一致本身就證明「其中一方是錯的」，
+ * 而這幾題正好是全題庫中最不該被照單全收的。
+ * 這組測試確保衝突被保留、被計數、被標記 —— 讓它無法在未來被誰「優化」掉。
+ */
+describe('答案衝突必須被保留而非丟棄', () => {
+  const conflicted = allQuestions.filter((q) => q.provenance.answer_conflict);
+
+  it('meta 記錄的衝突數與逐題標記相符', () => {
+    expect(meta.answer_conflicts.count).toBe(conflicted.length);
+  });
+
+  it('確實存在衝突題（若歸零，多半是合併邏輯又把它吃掉了）', () => {
+    expect(conflicted.length).toBeGreaterThan(0);
+  });
+
+  it('每一題衝突都同時帶有「答案有爭議」標籤，UI 才篩得出來', () => {
+    const untagged = conflicted.filter((q) => !q.tags.includes('答案有爭議'));
+    expect(untagged.map((q) => q.id)).toEqual([]);
+  });
+
+  it('kept 必須等於該題實際採用的答案', () => {
+    const wrong = conflicted.filter((q) => q.provenance.answer_conflict!.kept !== q.answer);
+    expect(wrong.map((q) => q.id)).toEqual([]);
+  });
+
+  it('kept 與 other 必須真的不同（否則不叫衝突）', () => {
+    const same = conflicted.filter(
+      (q) => q.provenance.answer_conflict!.kept === q.provenance.answer_conflict!.other
+    );
+    expect(same.map((q) => q.id)).toEqual([]);
+  });
+
+  /**
+   * 欄位名稱不得說謊：重複也可能發生在社群檔內部（兩個工作表答案不同），
+   * 那種情況兩邊都是 community。用 kept_source / other_source 記錄實際來源，
+   * 而不是寫死成 official / community。
+   */
+  it('kept_source 與該題自身的來源類型一致', () => {
+    const mismatched = conflicted.filter(
+      (q) => q.provenance.answer_conflict!.kept_source !== q.provenance.source_type
+    );
+    expect(mismatched.map((q) => q.id)).toEqual([]);
+  });
+
+  it('meta 的說明必須言明本專案不裁決誰對', () => {
+    expect(meta.answer_conflicts.note).toContain('不裁決');
+  });
+});
+
 describe('來源揭露', () => {
   it('每個來源都標明發布者與權威層級', () => {
     for (const s of sources) {

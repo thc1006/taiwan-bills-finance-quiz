@@ -91,6 +91,14 @@ def render_question(q: dict, seq: int) -> list[str]:
     for o in q["options"]:
         lines.append(f"- ({o['key']}) {o['text']}")
     lines += ["", f"**答案：{q['answer']}**　·　{'　·　'.join(meta_bits)}", ""]
+    ac = q["provenance"].get("answer_conflict")
+    if ac:
+        lines += [
+            f"> ⚠ **本題答案有爭議。**{SRC_LABEL.get(ac['kept_source'], '?')}標為 **{ac['kept']}**，"
+            f"{SRC_LABEL.get(ac['other_source'], '?')}標為 **{ac['other']}**。"
+            "本整理採用前者，但**未裁決誰對** —— 請自行查證現行法條後再決定。",
+            "",
+        ]
     if q.get("explanation"):
         lines += [f"**解析：**{q['explanation']}", ""]
     if lc.get("current_text"):

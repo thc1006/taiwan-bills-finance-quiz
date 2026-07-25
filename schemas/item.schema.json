@@ -16,8 +16,14 @@
     "tags"
   ],
   "properties": {
-    "id": { "type": "string", "pattern": "^(tbfa|comm)-[0-9]+$" },
-    "stem": { "type": "string", "minLength": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^(tbfa|comm)-[0-9]+$"
+    },
+    "stem": {
+      "type": "string",
+      "minLength": 1
+    },
     "options": {
       "type": "array",
       "minItems": 2,
@@ -25,35 +31,127 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["key", "text"],
+        "required": [
+          "key",
+          "text"
+        ],
         "properties": {
-          "key": { "enum": ["A", "B", "C", "D"] },
-          "text": { "type": "string", "minLength": 1 }
+          "key": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
-    "answer": { "enum": ["A", "B", "C", "D"] },
-    "explanation": { "type": "string" },
-    "subject": { "enum": ["票券金融法規", "票券金融實務"] },
-    "source_id": { "type": "string" },
+    "answer": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    "explanation": {
+      "type": "string"
+    },
+    "subject": {
+      "enum": [
+        "票券金融法規",
+        "票券金融實務"
+      ]
+    },
+    "source_id": {
+      "type": "string"
+    },
     "provenance": {
       "type": "object",
-      "required": ["source_type"],
+      "required": [
+        "source_type"
+      ],
       "properties": {
         "source_type": {
-          "enum": ["official_association_bank", "community_compilation"],
+          "enum": [
+            "official_association_bank",
+            "community_compilation"
+          ],
           "description": "答案是誰說的。official = 票券公會釋出；community = 不具名考生彙整。"
         },
-        "original_no": { "type": ["integer", "null"] },
-        "sheet": { "type": "string" },
-        "explanation_from": { "type": "string" },
-        "also_in_community_compilation": { "type": "boolean" }
+        "original_no": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "sheet": {
+          "type": "string"
+        },
+        "explanation_from": {
+          "type": "string"
+        },
+        "also_in_community_compilation": {
+          "type": "boolean"
+        },
+        "answer_conflict": {
+          "type": "object",
+          "required": [
+            "kept",
+            "kept_source",
+            "other",
+            "other_source"
+          ],
+          "description": "兩份來源對同一題給出不同答案。本專案不裁決誰對，僅如實記錄並於介面警示。",
+          "properties": {
+            "kept": {
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "kept_source": {
+              "enum": [
+                "official_association_bank",
+                "community_compilation"
+              ]
+            },
+            "other": {
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            },
+            "other_source": {
+              "enum": [
+                "official_association_bank",
+                "community_compilation"
+              ]
+            }
+          }
+        }
       }
     },
-    "tags": { "type": "array", "items": { "type": "string" } },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "law_citation": {
       "type": "object",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
         "status": {
           "enum": [
@@ -66,16 +164,31 @@
           ],
           "description": "verified_article_exists 僅代表引用的條號仍存在，不代表答案正確。"
         },
-        "law": { "type": "string" },
-        "article": { "type": "string" },
+        "law": {
+          "type": "string"
+        },
+        "article": {
+          "type": "string"
+        },
         "current_text": {
           "type": "string",
           "description": "現行條文原文（節錄）。只允許出現在 verified_article_exists。"
         },
-        "source_url": { "type": "string", "format": "uri" },
-        "raw_law_name": { "type": "string" },
-        "matched_via": { "enum": ["fuzzy"] },
-        "reason": { "type": "string" }
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "raw_law_name": {
+          "type": "string"
+        },
+        "matched_via": {
+          "enum": [
+            "fuzzy"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
       }
     }
   }
