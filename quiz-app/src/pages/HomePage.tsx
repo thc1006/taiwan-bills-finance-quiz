@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { ExamSubject, QuizConfig, QuizMode } from '../types/quiz';
-import { allTags, meta, sources, stats } from '../data/questions';
+import { allTags, meta, stats } from '../data/questions';
 import { MOCK_PER_SUBJECT, clearWrong, countWrong, poolSize } from '../hooks/useQuiz';
 import { PASS_PER_SUBJECT, PASS_TOTAL } from '../utils/scoring';
 
@@ -69,7 +69,6 @@ export function HomePage({ onStart }: HomePageProps) {
         ? wrongCount > 0
         : available > 0;
 
-  const audit = meta.law_citation_audit;
   return (
     <div className="home">
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -280,40 +279,6 @@ export function HomePage({ onStart }: HomePageProps) {
         {!startable && mode === 'wrong' && (
           <p className="note">還沒有錯題紀錄 —— 先做幾題練習吧。</p>
         )}
-      </section>
-
-      {/* ── 資料來源 ──────────────────────────────────────── */}
-      <section className="card">
-        <h2>資料來源</h2>
-
-        <p className="note">
-          每題解析所引用的法條，均已與 {audit.corpus.laws} 部法規（
-          {audit.corpus.articles.toLocaleString()} 條，擷取自{audit.corpus.source}，
-          {audit.corpus.retrieved_at}）比對；確認條號現行有效者，該題直接附上條文原文。
-        </p>
-
-        <h3>題庫出處</h3>
-        <ul className="source-list">
-          {sources.map((s) => (
-            <li key={s.source_id}>
-              <div className="source-head">
-                <a href={s.url} target="_blank" rel="noreferrer noopener">
-                  {s.title}
-                </a>
-                <span
-                  className={`badge ${
-                    s.authority === 'official' ? 'badge-official' : 'badge-community'
-                  }`}
-                >
-                  {s.authority === 'official' ? '官方' : '社群'}
-                </span>
-              </div>
-              <small>
-                {s.publisher} · {s.note}
-              </small>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <footer className="site-foot">

@@ -40,17 +40,15 @@ describe('首頁', () => {
     expect(screen.getByText(/任一科不得低於/)).toBeInTheDocument();
   });
 
-  it('揭露資料來源，不把出處藏起來', () => {
+  /**
+   * 出處資訊刻意**不放首頁** —— 首頁列一份總表，讀的人不會把它跟手上這一題
+   * 連起來。「這個答案是誰說的」只有在看到答案的那一刻才有意義，
+   * 所以改附在每題答案底下（見下方「作答後顯示出處」）。
+   */
+  it('首頁不再列出處總表', () => {
     renderApp();
-    // 首頁保留「資料來源」區塊；逐題的可信度警語則在作答揭曉時顯示
-    expect(screen.getByRole('heading', { name: '資料來源' })).toBeInTheDocument();
-  });
-
-  it('列出每一份來源並標示權威層級', () => {
-    renderApp();
-    expect(screen.getByRole('heading', { name: '題庫出處' })).toBeInTheDocument();
-    expect(screen.getAllByText('官方').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('社群').length).toBeGreaterThan(0);
+    expect(screen.queryByRole('heading', { name: '資料來源' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: '題庫出處' })).not.toBeInTheDocument();
   });
 });
 
@@ -86,6 +84,22 @@ describe('練習模式完整流程', () => {
 
     // 未作答的 9 題必須計入分母，不能只算按過的那 1 題
     expect(screen.getByText(/未作答 9 題/)).toBeInTheDocument();
+  });
+
+  it('作答後在答案底下顯示這一題的出處與權威層級', async () => {
+    const user = userEvent.setup();
+    renderApp();
+    await user.click(screen.getByRole('button', { name: '10' }));
+    await user.click(screen.getByRole('button', { name: /開始練習/ }));
+    expect(document.querySelector('.q-source')).toBeNull();
+
+    await answerFirstOption(user);
+    const src = document.querySelector('.q-source');
+    expect(src).not.toBeNull();
+    expect(src?.textContent).toContain('出處');
+    // 一定有連結指回原始來源，且標示官方或社群
+    expect(src?.querySelector('a')?.getAttribute('href')).toMatch(/^https?:\/\//);
+    expect(src?.textContent).toMatch(/官方|社群/);
   });
 
   it('答錯的題會進錯題本，回首頁後可以複習', async () => {

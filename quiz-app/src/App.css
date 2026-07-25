@@ -398,6 +398,17 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   border-radius: 0 6px 6px 0; margin: 10px 0 0; line-height: 1.7;
 }
 
+.q-source {
+  display: flex; flex-wrap: wrap; gap: 7px; align-items: baseline;
+  font-size: .78rem; color: var(--dim); margin: 10px 0 0;
+  padding-top: 10px; border-top: 1px dashed var(--line);
+}
+.q-source-label {
+  background: var(--chip); border-radius: 4px; padding: 1px 7px; flex: none;
+}
+.q-source a { color: var(--accent); }
+.q-source-pub { color: var(--dim); }
+
 .law-article {
   background: var(--chip); border-radius: var(--radius-sm); padding: 11px 15px; margin-top: 10px;
 }

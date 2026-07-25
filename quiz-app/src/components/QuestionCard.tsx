@@ -1,6 +1,7 @@
 import type { QuizQuestion } from '../types/quiz';
 import { CitationBadge, SourceBadge } from './SourceBadge';
 import { LawArticle } from './LawArticle';
+import { SourceNote } from './SourceNote';
 
 const SOURCE_NAME: Record<string, string> = {
   official_association_bank: '官方公會題庫',
@@ -94,6 +95,7 @@ export function QuestionCard({
             <p className="q-explanation q-muted">此題來源檔未附解析。</p>
           )}
           <LawArticle citation={question.law_citation} />
+          <SourceNote question={question} />
           {/*
             兩份來源答案不一致 —— 這比「來源是社群」嚴重得多，因為它是
             「其中一方確定是錯的」的直接證據。必須排在其他警語之前。
