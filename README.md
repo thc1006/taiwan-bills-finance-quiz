@@ -234,6 +234,24 @@ A：每科各 60 分鐘，是兩個獨立節次，時間不能互相挪用。本
 
 ---
 
+## 純文字題庫（Gist）
+
+不想開網頁作答、只想 Ctrl+F 查題目，或想讓 AI 助理讀整份題庫的話，
+題庫另有一份純 Markdown 版本，每一題自成一個可獨立閱讀的區塊：
+
+**https://gist.github.com/thc1006/ac4fbf7cd5954df6aa3210e57d197218**
+
+| 檔案 | 內容 |
+|---|---|
+| `01-bills-finance-law.md` | 票券金融法規 574 題（490 KB） |
+| `02-bills-finance-practice.md` | 票券金融實務 663 題（378 KB） |
+| `03-calculation-questions.md` | 計算題 16 題 |
+| `04-official-tbfa-480q.json` | 官方公會參考題庫 480 題（結構化 JSON） |
+
+由 `tools/build_gist.py` 從同一份 `dataset.json` 產生，內容與線上版一致。
+
+---
+
 ## 相關官方連結
 
 | 用途 | 網址 |

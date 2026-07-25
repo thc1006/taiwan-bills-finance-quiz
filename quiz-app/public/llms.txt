@@ -33,6 +33,10 @@
 - [原始碼與說明](https://github.com/thc1006/taiwan-bills-finance-quiz): README 含完整考試規則與題庫統計
 - [資料溯源](https://github.com/thc1006/taiwan-bills-finance-quiz/blob/main/DATA-PROVENANCE.md): 每一份來源的出處、處理管線、以及明列「我們沒有做的事」
 
+## 純文字題庫（適合直接讀取全文）
+
+- [題庫 Gist（Markdown + JSON）](https://gist.github.com/thc1006/ac4fbf7cd5954df6aa3210e57d197218): 1,237 題全文，每題含題幹、選項、答案、解析與現行法條原文，無需執行 JavaScript
+
 ## 官方連結（權威來源）
 
 - [證基會測驗簡章下載](https://www.sfi.org.tw/Node?id=216)
