@@ -3,7 +3,7 @@ import { useId, useState } from 'react';
 /**
  * 引用法條稽核的覆蓋率 —— 單一水平堆疊長條。
  *
- * 形態的選擇：這是 part-to-whole（1,237 題如何分布在四種稽核狀態），
+ * 形態的選擇：這是 part-to-whole（全部題目如何分布在四種稽核狀態），
  * 所以是堆疊長條而非四個獨立數字；類別名稱很長，因此走水平。
  *
  * 顏色的選擇：這四類**不是身分，是核對程度的序數**
@@ -33,7 +33,7 @@ export function AuditBar({ slices, total }: { slices: AuditSlice[]; total: numbe
   return (
     <figure className="audit" aria-labelledby={titleId}>
       <figcaption id={titleId} className="audit-cap">
-        1,237 題的引用法條稽核分布
+        {total.toLocaleString()} 題的引用法條稽核分布
       </figcaption>
 
       <div

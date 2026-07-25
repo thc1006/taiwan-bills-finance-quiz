@@ -172,4 +172,33 @@ describe('答案衝突警示', () => {
     setup(base, true, 'A');
     expect(document.querySelector('.q-conflict')).toBeNull();
   });
+
+  /**
+   * 7 題衝突裡有 3 題的重複發生在社群檔內部（兩個工作表對同一題給了不同答案），
+   * 兩邊 source 相同。若照「A 標為 X，B 標為 Y」的句型硬套，會印出
+   * 「社群考古題標為 C，社群考古題標為 B」—— 同一個名字講兩次，
+   * 讀起來像系統壞掉，而不是像一個資料衝突。
+   */
+  it('兩邊來源相同時改用不同句型，不重複同一個來源名稱', () => {
+    const sameSource: QuizQuestion = {
+      ...conflicted,
+      id: 'comm-0331',
+      provenance: {
+        source_type: 'community_compilation',
+        original_no: 331,
+        answer_conflict: {
+          kept: 'A',
+          kept_source: 'community_compilation',
+          other: 'D',
+          other_source: 'community_compilation',
+        },
+      },
+    };
+    setup(sameSource, true, 'A');
+    const text = document.querySelector('.q-conflict')?.textContent ?? '';
+    expect(text).toContain('同一份');
+    expect(text).toContain('兩個不同答案');
+    // 來源名稱只能出現一次
+    expect(text.split('社群考古題').length - 1).toBe(1);
+  });
 });

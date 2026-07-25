@@ -157,7 +157,7 @@ taiwan-bills-finance-quiz/
 cd quiz-app
 npm install
 npm run dev          # 開發伺服器
-npm run test:run     # 103 個單元測試
+npm run test:run     # 123 個單元測試
 npm run lint
 npm run build
 ```
@@ -177,7 +177,7 @@ python tools/validate_dataset.py     # schema + 語意驗證
 
 ## 測試策略
 
-103 個測試分三類：
+123 個測試分四類：
 
 1. **規則正確性**（`scoring.test.ts`）—— 及格規則的每一種邊界：
    總分剛好 140、單科剛好 60、總分 150 但單科 50（**不合格**）、只考一科、零作答。
@@ -191,8 +191,16 @@ python tools/validate_dataset.py     # schema + 語意驗證
    - 條文抽取有缺口的法規，不得產生「該條不存在」的結論
    - 兩份來源答案衝突時必須被保留與計數，不得被合併邏輯默默吃掉
 
+4. **整合與文件閘門**（`App.test.tsx`、`docs-counts.test.ts`）—— 前者把整個 App
+   掛起來跑完練習與模擬考的完整流程（含 StrictMode）；後者比對 README 宣稱的
+   每一個統計數字與資料集、以及宣稱的測試數與實際測試數。
+
 第 3 類的存在理由：一個叫「已查證」但其實沒查證的欄位，比沒有這個欄位危險得多 ——
 它會讓下一個維護者跳過查證，也會讓使用者把社群整理的答案當成官方認證的答案來背。
+
+第 4 類的 `docs-counts.test.ts` 是被逼出來的：README 的測試數字漂過兩次
+（93 → 103 → 122 → 實際 123），兩次都是「加了東西但忘了回頭改文件」。
+一份寫著錯誤統計的 README，和一個叫「已查證」卻沒查證的欄位是同一種病。
 
 ---
 
@@ -205,6 +213,9 @@ python tools/validate_dataset.py     # schema + 語意驗證
   一個寫 `15%`）。資料層兩份都保留（只練一科的人不該少一題），
   抽題層跨科去重（同一份模擬考卷不會出現兩次）。
 - **7 題兩份來源答案互相矛盾**，已標記「答案有爭議」但未裁決。見上方說明。
+- **`llms.txt` 放在 `/taiwan-bills-finance-quiz/llms.txt`，不是慣例要求的網域根目錄。**
+  GitHub Pages 的專案站台掛在子路徑下，根目錄屬於 `thc1006.github.io` 那個 repo，
+  本專案無法提供。依慣例只讀 `https://thc1006.github.io/llms.txt` 的代理會找不到它。
 - 語料庫只收錄 17 部票券法規；引用銀行法、中央銀行法、證交法、洗錢防制法
   及各類函令的題目未進行檢查。
 

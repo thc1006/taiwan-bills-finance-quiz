@@ -101,10 +101,26 @@ export function QuestionCard({
           {question.provenance.answer_conflict && (
             <p className="q-conflict">
               ⚠ <strong>本題答案有爭議。</strong>
-              {SOURCE_NAME[question.provenance.answer_conflict.kept_source]}標為{' '}
-              <strong>{question.provenance.answer_conflict.kept}</strong>，
-              {SOURCE_NAME[question.provenance.answer_conflict.other_source]}標為{' '}
-              <strong>{question.provenance.answer_conflict.other}</strong>。
+              {question.provenance.answer_conflict.kept_source ===
+              question.provenance.answer_conflict.other_source ? (
+                // 兩邊同源（社群檔的兩個工作表對同一題給了不同答案）。
+                // 若照「A 標為 X，B 標為 Y」的句型套，會印出
+                // 「社群考古題標為 C，社群考古題標為 B」——同一個名字講兩次，
+                // 讀起來像系統壞掉，而不是像一個資料衝突。
+                <>
+                  同一份{SOURCE_NAME[question.provenance.answer_conflict.kept_source]}
+                  中，這題出現了兩個不同答案：
+                  <strong>{question.provenance.answer_conflict.kept}</strong> 與{' '}
+                  <strong>{question.provenance.answer_conflict.other}</strong>。
+                </>
+              ) : (
+                <>
+                  {SOURCE_NAME[question.provenance.answer_conflict.kept_source]}標為{' '}
+                  <strong>{question.provenance.answer_conflict.kept}</strong>，
+                  {SOURCE_NAME[question.provenance.answer_conflict.other_source]}標為{' '}
+                  <strong>{question.provenance.answer_conflict.other}</strong>。
+                </>
+              )}
               本工具採用前者，但<strong>未裁決誰對</strong> —— 請自行查證現行法條後再決定。
             </p>
           )}

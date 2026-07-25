@@ -270,13 +270,13 @@ export function HomePage({ onStart }: HomePageProps) {
             <p className="note">
               符合條件 <strong>{available.toLocaleString()}</strong> 題
               {/*
-                題庫有 1,237 題，但兩科合併的可抽題池是 1,236 ——
-                官方題庫的法規 #174 與實務 #416 是同一題，資料層兩份都留
-                （只練一科的人不該少一題），合併時只出一次。
-                不解釋的話，使用者會以為哪裡算錯了。
+                題庫題數與「兩科合併」的可抽題池會差幾題 —— 官方題庫本身
+                就有同一題同時收在兩科的情形（法規 #174 與實務 #416），
+                資料層兩份都留（只練一科的人不該少一題），合併時只出一次。
+                數量由兩者相減推導，不寫死 —— 資料換版時這行必須跟著變。
               */}
               {available < stats.total && subject === 'all' && tags.length === 0 && !officialOnly && (
-                <>（有 1 組題目同時收錄於兩科，合併練習時只出一次）</>
+                <>（有 {stats.total - available} 組題目同時收錄於兩科，合併練習時只出一次）</>
               )}
               {mode === 'practice' && available < count && available > 0 && (
                 <>，不足 {count} 題，將出 {available} 題</>
