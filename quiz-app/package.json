@@ -1,0 +1,50 @@
+{
+  "name": "taiwan-bills-finance-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "票券商業務人員專業科目測驗 備考練習 — 官方公會題庫 + 考古題整理，附現行法條對照",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p tsconfig.app.json && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "type-check": "tsc --noEmit -p tsconfig.app.json"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  },
+  "homepage": "https://thc1006.github.io/taiwan-bills-finance-quiz/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thc1006/taiwan-bills-finance-quiz.git"
+  },
+  "license": "AGPL-3.0-or-later"
+}

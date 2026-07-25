@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - 'quiz-app/**'
+      - 'schemas/**'
+      - 'tools/**'
+      - '.github/workflows/*.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'quiz-app/**'
+      - 'schemas/**'
+      - 'tools/**'
+      - '.github/workflows/*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Type check · Lint · Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: quiz-app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'quiz-app/.nvmrc'
+          cache: npm
+          cache-dependency-path: quiz-app/package-lock.json
+
+      - run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit -p tsconfig.app.json
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm run test:run
+
+      - name: Build
+        run: npm run build
+
+  dataset:
+    name: Dataset schema validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet jsonschema
+
+      # 資料集是這個專案的實質內容。schema 驗證擋的是「悄悄改壞資料」——
+      # 例如把 answer_verification.verified_against_official_key 從 0 調高，
+      # 或把社群來源的 authority 標成 official。
+      - name: Validate dataset against schema
+        run: python tools/validate_dataset.py

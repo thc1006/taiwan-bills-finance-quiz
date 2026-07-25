@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "item.schema.json",
+  "title": "票券商業務人員題庫 — 單題",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "stem",
+    "options",
+    "answer",
+    "explanation",
+    "subject",
+    "source_id",
+    "provenance",
+    "tags"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^(tbfa|comm)-[0-9]+$" },
+    "stem": { "type": "string", "minLength": 1 },
+    "options": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "text"],
+        "properties": {
+          "key": { "enum": ["A", "B", "C", "D"] },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "answer": { "enum": ["A", "B", "C", "D"] },
+    "explanation": { "type": "string" },
+    "subject": { "enum": ["票券金融法規", "票券金融實務"] },
+    "source_id": { "type": "string" },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {
+          "enum": ["official_association_bank", "community_compilation"],
+          "description": "答案是誰說的。official = 票券公會釋出；community = 不具名考生彙整。"
+        },
+        "original_no": { "type": ["integer", "null"] },
+        "sheet": { "type": "string" },
+        "explanation_from": { "type": "string" },
+        "also_in_community_compilation": { "type": "boolean" }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "law_citation": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": [
+            "verified_article_exists",
+            "article_not_found",
+            "indeterminate",
+            "law_outside_corpus",
+            "cited_document_not_in_corpus",
+            "no_citation"
+          ],
+          "description": "verified_article_exists 僅代表引用的條號仍存在，不代表答案正確。"
+        },
+        "law": { "type": "string" },
+        "article": { "type": "string" },
+        "current_text": {
+          "type": "string",
+          "description": "現行條文原文（節錄）。只允許出現在 verified_article_exists。"
+        },
+        "source_url": { "type": "string", "format": "uri" },
+        "raw_law_name": { "type": "string" },
+        "matched_via": { "enum": ["fuzzy"] },
+        "reason": { "type": "string" }
+      }
+    }
+  }
+}

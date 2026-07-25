@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+__pycache__/
+*.pyc
+.DS_Store
+*.local
+tools/_probe_*.py
+
+# tsc 誤設 noEmit=false 時會把 .js 吐在 .ts 旁邊。
+# 這種產物一旦被 commit，Vite 可能解析到舊的 .js 而非 .ts，
+# 造成「改了程式碼卻沒生效」這種極難查的問題。
+quiz-app/src/**/*.js
+quiz-app/vite.config.js
+quiz-app/vitest.config.js
