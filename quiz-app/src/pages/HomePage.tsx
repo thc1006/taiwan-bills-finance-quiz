@@ -3,7 +3,6 @@ import type { ExamSubject, QuizConfig, QuizMode } from '../types/quiz';
 import { allTags, meta, sources, stats } from '../data/questions';
 import { MOCK_PER_SUBJECT, clearWrong, countWrong, poolSize } from '../hooks/useQuiz';
 import { PASS_PER_SUBJECT, PASS_TOTAL } from '../utils/scoring';
-import { Rich } from '../components/Rich';
 import { AuditBar, type AuditSlice } from '../components/AuditBar';
 
 export interface HomePageProps {
@@ -316,60 +315,18 @@ export function HomePage({ onStart }: HomePageProps) {
         )}
       </section>
 
-      {/* ── 資料誠實揭露 ──────────────────────────────────── */}
+      {/* ── 資料來源 ──────────────────────────────────────── */}
       <section className="card">
-        <h2>這些題目從哪來、可信到什麼程度</h2>
-
-        <ul className="kpi-row">
-          <li className="kpi kpi-official">
-            <b>{stats.official}</b>
-            <span>官方公會題庫</span>
-            <small>測驗委託單位釋出</small>
-          </li>
-          <li className="kpi kpi-community">
-            <b>{stats.community}</b>
-            <span>社群考古題</span>
-            <small>不具名，含少數錯誤</small>
-          </li>
-          <li className="kpi">
-            <b>{stats.withExplanation}</b>
-            <span>附解析</span>
-            <small>{Math.round((stats.withExplanation / stats.total) * 100)}% 的題目</small>
-          </li>
-          <li className="kpi kpi-highlight">
-            <b>{stats.withLawText}</b>
-            <span>附現行法條原文</span>
-            <small>可直接對照現行法</small>
-          </li>
-        </ul>
-
-        <div className="alert alert-warn">
-          <h3>沒有任何一題的答案經過逐條核對</h3>
-          <p>
-            <Rich text={meta.answer_verification.note} />
-          </p>
-        </div>
-
-        {meta.answer_conflicts.count > 0 && (
-          <div className="alert alert-bad">
-            <h3>{meta.answer_conflicts.count} 題兩份來源答案互相矛盾</h3>
-            <p>
-              <Rich text={meta.answer_conflicts.note} />
-            </p>
-          </div>
-        )}
+        <h2>資料來源</h2>
 
         <h3>引用法條稽核</h3>
         <p className="note">
-          以 {audit.corpus.laws} 部票券法規（{audit.corpus.articles} 條，擷取自
+          以 {audit.corpus.laws} 部法規（{audit.corpus.articles} 條，擷取自
           {audit.corpus.source}，{audit.corpus.retrieved_at}）比對每題解析引用的條號。
         </p>
         <AuditBar slices={auditSlices} total={stats.total} />
-        <p className="note">
-          <Rich text={audit.what_this_means} />
-        </p>
 
-        <h3>資料來源</h3>
+        <h3>題庫出處</h3>
         <ul className="source-list">
           {sources.map((s) => (
             <li key={s.source_id}>

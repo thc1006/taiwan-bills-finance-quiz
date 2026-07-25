@@ -46,7 +46,7 @@ export interface LawCitation {
   source_url?: string;
   /** 來源檔寫的原始法規名稱（模糊比對時保留，供人工覆核） */
   raw_law_name?: string;
-  matched_via?: 'fuzzy';
+  matched_via?: 'fuzzy' | 'suffix';
   reason?: string;
 }
 

@@ -26,7 +26,6 @@ export interface AuditSlice {
 
 export function AuditBar({ slices, total }: { slices: AuditSlice[]; total: number }) {
   const [hover, setHover] = useState<string | null>(null);
-  const [showTable, setShowTable] = useState(false);
   const titleId = useId();
   const shown = slices.filter((s) => s.value > 0);
 
@@ -77,36 +76,6 @@ export function AuditBar({ slices, total }: { slices: AuditSlice[]; total: numbe
         ))}
       </ul>
 
-      <button
-        type="button"
-        className="link-btn"
-        aria-expanded={showTable}
-        onClick={() => setShowTable((v) => !v)}
-      >
-        {showTable ? '收起數據表' : '以表格檢視'}
-      </button>
-      {showTable && (
-        <table className="audit-table">
-          <thead>
-            <tr>
-              <th scope="col">稽核狀態</th>
-              <th scope="col">題數</th>
-              <th scope="col">佔比</th>
-              <th scope="col">意義</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slices.map((s) => (
-              <tr key={s.key}>
-                <th scope="row">{s.label}</th>
-                <td>{s.value}</td>
-                <td>{Math.round((s.value / total) * 100)}%</td>
-                <td className="audit-hint">{s.hint}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
     </figure>
   );
 }

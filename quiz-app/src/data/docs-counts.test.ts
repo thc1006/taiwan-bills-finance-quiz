@@ -75,8 +75,8 @@ describe('README 的題庫統計必須與資料集相符', () => {
   });
 
   it('法規語料庫規模', () => {
-    expect(claimed(/以 (\d+) 部票券法規/)).toBe(meta.law_citation_audit.corpus.laws);
-    expect(claimed(/以 \d+ 部票券法規（([\d,]+) 條）/)).toBe(
+    expect(claimed(/以 (\d+) 部法規/)).toBe(meta.law_citation_audit.corpus.laws);
+    expect(claimed(/以 \d+ 部法規（([\d,]+) 條）/)).toBe(
       meta.law_citation_audit.corpus.articles
     );
   });

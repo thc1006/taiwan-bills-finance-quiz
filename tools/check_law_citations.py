@@ -52,6 +52,14 @@ ALIASES = {
     "票券金融法": "票券金融管理法",
     "票券管理法": "票券金融管理法",
     "票券據法": "票據法",
+    "營業稅法": "加值型及非加值型營業稅法",
+    "票券業徵信準則": "中華民國票券金融商業同業公會會員徵信準則",
+    "郵匯儲金投資債券票券管理辦法": "郵政儲金投資債券票券管理辦法",
+    "銀行發行可轉讓定期存單應注意事項": "銀行業發行可轉讓定期存單應注意事項",
+    "票券商以附買回或附賣回條件方式辦理之交易限額規定":
+        "票券商主要負債總額及辦理附賣回條件交易限額規定",
+    "票券商買賣短期票券預臨時放假補計利息辦法":
+        "票券商買賣短期票券遇臨時放假補計利息辦法",
 }
 
 # 常見但**不在**語料庫中的法規（誠實標示「未查」，不假裝通過）
@@ -92,7 +100,28 @@ def norm_num(raw: str) -> int | None:
     return cn_to_int(raw.strip().translate(str.maketrans("０１２３４５６７８９", "0123456789")))
 
 
+# 抓到的文件名稱前面常黏著連接詞或函令字號的尾巴。
+#
+# DOC_BEFORE_RE 是往回找「以法規字尾結束的最短片段」，所以
+# 「依票金法第2條」會抓到「依票金法」、「…第21條準用銀行法第33條」會抓到
+# 「條準用銀行法」、「…第10600196810號函票券商防制洗錢…」會抓到「號函票券商…」。
+# 這些都不是新文件，只是沒剝乾淨的殘句 —— 不剝就會被誤報為「語料庫未收錄」。
+STRIP_PREFIX = re.compile(
+    r"^(?:條之?規定?準用|條準用|準用|依據|依照|依本|依|按|適用|屬於|屬|及|與|暨"
+    r"|號函|號令|日新訂定之|新訂定之|訂定之|修正之|發布之|所稱|之)+"
+)
+
+
+def strip_prefix(s: str) -> str:
+    prev = None
+    while prev != s:
+        prev = s
+        s = STRIP_PREFIX.sub("", s)
+    return s
+
+
 def norm_name(s: str) -> str:
+    s = strip_prefix(s.strip())
     return re.sub(r"[\s「」『』（）()、,，之]", "", s).replace("臺", "台")
 
 
@@ -126,15 +155,23 @@ def load_corpus() -> dict[str, dict[str, str]]:
         # 少抓一個標題 = 那一條會被誤判成「已不存在」，進而把一批正確的題目
         # 錯誤標記為過時 —— 這正是第一版的實際錯誤（10 條被漏掉、8 題被誤判）。
         # 因此除了放寬 regex，下方另有 gap 偵測作為第二道防線。
+        # 全國法規資料庫對「條之N」有兩種寫法，**兩種都要收**：
+        #   第 33-1 條   ← 銀行法、所得稅法、公司法等多數法規用這個
+        #   第 33 條之 1 ← 少數用這個
+        # 只收後者的話，前者那些條文根本不會進語料庫，於是引用它們的題目
+        # 會被誤判成「引用條號已不存在」—— 而缺口偵測也抓不到，
+        # 因為它比的是整數部分，33 與 34 之間本來就沒有缺口。
         heads = list(re.finditer(
-            rf"^\s*(?:本條文有(?:附件|附表|圖表)\s*)?第\s*({NUM})\s*條(?:\s*之\s*({NUM}))?\s*$",
+            rf"^\s*(?:本條文有(?:附件|附表|圖表)\s*)?"
+            rf"第\s*({NUM})(?:\s*-\s*({NUM}))?\s*條(?:\s*之\s*({NUM}))?\s*$",
             text, re.M))
         arts: dict[str, str] = {}
         for i, am in enumerate(heads):
             n = norm_num(am.group(1))
             if n is None:
                 continue
-            sub = norm_num(am.group(2)) if am.group(2) else None
+            sub_raw = am.group(2) or am.group(3)
+            sub = norm_num(sub_raw) if sub_raw else None
             key = f"{n}-{sub}" if sub else str(n)
             end = heads[i + 1].start() if i + 1 < len(heads) else len(text)
             body = re.sub(r"\n{2,}", "\n", text[am.end():end]).strip()
@@ -182,10 +219,21 @@ class Resolver:
         hit = difflib.get_close_matches(n, list(self.outside_norm), n=1, cutoff=FUZZY_THRESHOLD)
         if hit:
             return "outside", self.outside_norm[hit[0]], "fuzzy"
+
+        # 後綴比對：解析常寫成「票券金融公司依據票券金融管理法第 21 條」，
+        # DOC_BEFORE_RE 會把整串「票券金融公司依據票券金融管理法」當成文件名。
+        # 前綴剝除處理不了這種（連接詞夾在中間），但真正的法規名稱就在字串尾端。
+        # 取最長的相符後綴，避免「銀行法」搶走「銀行法施行細則」。
+        best = None
+        for cand, canon in self.corpus_norm.items():
+            if n.endswith(cand) and (best is None or len(cand) > len(best[0])):
+                best = (cand, canon)
+        if best:
+            return "corpus", best[1], "suffix"
         return "unknown", raw, "none"
 
 
-ART_RE = re.compile(rf"第\s*({NUM})\s*條(?:\s*之\s*({NUM}))?")
+ART_RE = re.compile(rf"第\s*({NUM})(?:\s*-\s*({NUM}))?\s*條(?:\s*之\s*({NUM}))?")
 DOC_BEFORE_RE = re.compile(rf"([一-鿿]{{2,40}}?{DOC_SUFFIX})\s*[」』]?\s*$")
 
 
@@ -196,7 +244,8 @@ def extract_citations(expl: str) -> list[tuple[str, str]]:
         n = norm_num(m.group(1))
         if n is None:
             continue
-        sub = norm_num(m.group(2)) if m.group(2) else None
+        sub_raw = m.group(2) or m.group(3)
+        sub = norm_num(sub_raw) if sub_raw else None
         art = f"{n}-{sub}" if sub else str(n)
         before = expl[max(0, m.start() - 60): m.start()]
         dm = DOC_BEFORE_RE.search(before)
@@ -232,9 +281,9 @@ def main() -> int:
         raw, art = cites[0]
         kind, name, mode = resolver.resolve(raw)
         rec: dict = {"law": name, "article": art}
-        if mode == "fuzzy":
+        if mode in ("fuzzy", "suffix"):
             rec["raw_law_name"] = raw
-            rec["matched_via"] = "fuzzy"
+            rec["matched_via"] = mode
         if kind == "corpus":
             if art in corpus[name]:
                 rec["status"] = "verified_article_exists"

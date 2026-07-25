@@ -69,7 +69,8 @@ export default function App() {
     <ErrorBoundary>
       <Header
         settings={a11y.settings}
-        onCycleTheme={a11y.cycleTheme}
+        effectiveTheme={a11y.effectiveTheme}
+        onToggleTheme={a11y.toggleTheme}
         onFontSize={(v) => a11y.update('fontSize', v)}
         onToggleContrast={() => a11y.update('highContrast', !a11y.settings.highContrast)}
         onHome={() => setView('home')}

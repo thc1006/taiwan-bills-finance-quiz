@@ -2,22 +2,19 @@ import type { AccessibilitySettings } from '../types/quiz';
 
 export interface HeaderProps {
   settings: AccessibilitySettings;
-  onCycleTheme: () => void;
+  /** 目前實際生效的主題（settings.theme 可能是 'system'） */
+  effectiveTheme: 'light' | 'dark';
+  onToggleTheme: () => void;
   onFontSize: (v: AccessibilitySettings['fontSize']) => void;
   onToggleContrast: () => void;
   onHome: () => void;
   showHome: boolean;
 }
 
-const THEME_LABEL: Record<AccessibilitySettings['theme'], string> = {
-  system: '🖥 跟隨系統',
-  light: '☀ 淺色',
-  dark: '☾ 深色',
-};
-
 export function Header({
   settings,
-  onCycleTheme,
+  effectiveTheme,
+  onToggleTheme,
   onFontSize,
   onToggleContrast,
   onHome,
@@ -34,13 +31,14 @@ export function Header({
             回首頁
           </button>
         )}
+        {/* 標籤寫的是「按下去會發生什麼」，不是「現在是什麼」 */}
         <button
           type="button"
-          onClick={onCycleTheme}
+          onClick={onToggleTheme}
           className="btn-ghost"
-          aria-label={`主題：${THEME_LABEL[settings.theme]}，點擊切換`}
+          aria-label={effectiveTheme === 'dark' ? '切換至淺色模式' : '切換至深色模式'}
         >
-          {THEME_LABEL[settings.theme]}
+          {effectiveTheme === 'dark' ? '☀ 淺色' : '☾ 深色'}
         </button>
         <label className="sr-only" htmlFor="font-size">
           字級

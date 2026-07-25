@@ -183,8 +183,10 @@
         },
         "matched_via": {
           "enum": [
-            "fuzzy"
-          ]
+            "fuzzy",
+            "suffix"
+          ],
+          "description": "名稱非完全相符時的比對方式。fuzzy=近似字串；suffix=解析把法規名稱黏在其他詞後面（如「票券金融公司依據票券金融管理法」），取尾端相符者。"
         },
         "reason": {
           "type": "string"

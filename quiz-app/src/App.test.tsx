@@ -40,15 +40,17 @@ describe('首頁', () => {
     expect(screen.getByText(/任一科不得低於/)).toBeInTheDocument();
   });
 
-  it('揭露「答案未經逐條核對」，不把限制藏起來', () => {
+  it('揭露資料來源，不把出處藏起來', () => {
     renderApp();
-    expect(screen.getByText(/沒有任何一題的答案經過逐條核對/)).toBeInTheDocument();
+    // 首頁保留「資料來源」區塊；逐題的可信度警語則在作答揭曉時顯示
+    expect(screen.getByRole('heading', { name: '資料來源' })).toBeInTheDocument();
   });
 
-  it('顯示題庫來源組成', () => {
+  it('列出每一份來源並標示權威層級', () => {
     renderApp();
-    expect(screen.getByText('官方公會題庫')).toBeInTheDocument();
-    expect(screen.getByText('社群考古題')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '題庫出處' })).toBeInTheDocument();
+    expect(screen.getAllByText('官方').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('社群').length).toBeGreaterThan(0);
   });
 });
 
@@ -147,16 +149,24 @@ describe('模擬考', () => {
 });
 
 describe('無障礙設定', () => {
-  it('主題切換會寫到 <html> 並在重新掛載後保留', async () => {
+  /**
+   * 主題按鈕是**開關**不是三態循環：標籤寫的是動作（「☾ 深色」＝按了會變深色），
+   * 按一次就切到對面，不會經過看不懂的「跟隨系統」中間狀態。
+   */
+  it('主題按鈕一次切到對面，並在重新掛載後保留', async () => {
     const user = userEvent.setup();
     const { unmount } = renderApp();
 
-    await user.click(screen.getByRole('button', { name: /主題/ }));
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    // jsdom 預設 prefers-color-scheme 不是 dark，所以生效主題是淺色，
+    // 按鈕應提供「切換至深色」
+    const toDark = screen.getByRole('button', { name: '切換至深色模式' });
+    await user.click(toDark);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(screen.getByRole('button', { name: '切換至淺色模式' })).toBeInTheDocument();
 
     unmount();
     renderApp();
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
   });
 
   it('字級設定會套用到 <html>', async () => {
