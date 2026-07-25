@@ -111,6 +111,17 @@ body {
 }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* 全域連結色。
+   少了這條，任何忘了指定 color 的連結會掉回瀏覽器預設的 #0000EE ——
+   在深色主題的 --chip 底色上對比只有約 1.6:1（AA 要求 4.5:1），
+   等於看不見。實測 .law-foot 的「查看完整法規」就踩到了。
+   逐一補 color 治標，這裡一次擋掉整類問題。 */
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+a:visited { color: var(--accent); }
+
 /* ── Header ─────────────────────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 20;
